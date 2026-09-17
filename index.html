@@ -5,7 +5,7 @@ All photographs, the logo, fonts, styles, and interactions are embedded.
 Upload this file to your GitHub Pages repository as index.html.
 
 QUOTE FORM SETUP:
-1. Find QUOTE_EMAIL near the bottom and enter your receiving email address.
+1. Quote inbox is configured as getheavenlycleaningsolutions@gmail.com.
 2. Publish, submit one test quote, and confirm FormSubmit's activation email.
 3. Submit another test and verify that the quote arrives in your inbox.
 The form uses https://formsubmit.co with its normal spam verification enabled.
@@ -181,6 +181,84 @@ Do not run real advertising until that inbox test passes.
     @media(max-width:360px){.wrap{width:calc(100% - 32px)}.brand-name{font-size:11px}.brand img{width:51px;height:51px}.header-actions .button{font-size:9px;padding:10px}.hero-grid{gap:25px}h1{font-size:34px}.review-source{display:none}.form-row{grid-template-columns:1fr;gap:0}.form-card{padding:23px 18px}.article-inner{width:calc(100% - 40px)}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.button:hover{transform:none}}
     @media print{.site-header{position:static}.header-actions,.mobile-cta,.review-controls,.photo-button .zoom,.footer-links,.quote-form{display:none!important}.hero-grid,.quote-grid{display:block}.hero-image-frame>img{height:330px}.hero-visual{margin-top:24px}.hero-image-frame{border-radius:0}.quote-section{background:white;color:black}.quote-story>p,.owner figcaption span{color:black}.form-card{padding:20px 0}.photo-grid{display:flex}.photo-grid figure{flex:1}.photo-button>img{height:200px}body{background:white}}
+    /* Brand guide: exact palette, comfortable type, restrained 8–12px shapes.
+       The original script logo is preserved; its ink is styled evergreen with
+       a native SVG color filter, without redrawing or stretching the artwork. */
+    .wrap{max-width:1120px}
+    body{font-size:18px}
+    h1,h2,h3{font-weight:600;color:var(--green);letter-spacing:-.5px}
+    h1{font-size:clamp(44px,4vw,52px);line-height:1.16}
+    h2{font-size:34px;line-height:1.2}
+    .subhead{font-size:18px;line-height:1.6}
+    .button{font-size:17px;border-radius:8px}
+    .button.small{font-size:16px;min-height:48px;white-space:nowrap}
+    .reviews{border-radius:10px;background:var(--soft)}
+    .review-body{font-size:16px;line-height:1.55;min-height:74px}
+    .review-label,.review-person,.review-source,.review-expand,.review-count{font-size:12px}
+    .review-label{letter-spacing:.6px}
+    .icon-button,.review-pause{min-width:36px;min-height:36px}
+    .hero-image-frame{border-radius:12px}
+    .photo-note p{font-weight:600}
+    .article p{font-size:18px;line-height:1.65}
+    .article .opening{font-size:27px;line-height:1.4}
+    .article .takeaway{font-size:26px;line-height:1.4}
+    .photo-button,.owner-image,.form-card{border-radius:10px}
+    .quote-story h2{font-size:34px;color:var(--paper)}
+    .quote-story>p{font-size:18px;line-height:1.65;color:var(--paper)}
+    .quote-story>.eyebrow,.owner figcaption span{color:var(--soft)}
+    .form-intro{font-size:16px;line-height:1.6}
+    .field label{font-size:16px}
+    .field input,.field textarea{font-size:16px;min-height:48px;border-color:#7D8E82;border-radius:8px}
+    .field input:focus,.field textarea:focus{box-shadow:0 0 0 3px var(--soft)}
+    .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+    .contact-help,.form-footnote,.cta-note,.gallery-cta p{font-size:14px}
+    .form-status{color:#A13B35;font-size:16px}
+    .submit-button{font-size:17px;min-height:54px}
+    .gallery-heading span,.hero-caption,.photo-grid figcaption{font-size:14px}
+    .footer-brand,.footer-links a,.footer-links button{font-size:14px}
+    @media(max-width:760px){
+      h1{font-size:36px!important;line-height:1.18}
+      h2,.quote-story h2{font-size:28px!important}
+      .subhead,.article p,.quote-story>p{font-size:18px!important;line-height:1.65!important}
+      .review-body{font-size:16px!important;min-height:74px!important}
+      .review-label,.review-person,.review-source,.review-expand,.review-count{font-size:12px!important}
+      .hero-cta .button,.gallery-cta .button,.mobile-cta .button{font-size:17px!important;min-height:48px!important}
+      .hero-image-frame{border-radius:12px!important}
+      .field label,.form-intro{font-size:16px!important}
+      .field input,.field textarea{font-size:16px!important}
+      .form-footnote,.contact-help,.cta-note{font-size:14px!important}
+      .header-actions .button{min-height:48px!important;font-size:12px!important}
+    }
+    /* Readable photo captions: same Lora font as the page headlines. */
+    .hero-caption{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.5;color:var(--green);flex-wrap:wrap;gap:6px 20px}
+    .hero-caption span{font-style:normal}
+    /* Requested readability update: use the headline typeface site-wide. */
+    :root{--sans:var(--serif)}
+    body,button,input,textarea{font-family:var(--serif)}
+    .hero-caption span,.gallery-cta p{font-style:normal}
+    .header-note,.review-label,.review-person,.review-source,.review-expand,.review-count,
+    .cta-note,.hero-caption,.gallery-heading span,.photo-grid figcaption,.gallery-cta p,
+    .owner figcaption,.owner figcaption span,.contact-help,.form-footnote,
+    .footer-brand,.footer-brand small,.footer-links a,.footer-links button,
+    .form-success p,.form-success button,.privacy-dialog p{font-size:14px!important;line-height:1.6}
+    .review-label{font-size:12px!important;letter-spacing:.4px}
+    .hero-caption{font-size:16px!important}
+    .review-bottom{flex-wrap:wrap;row-gap:10px}
+    .review-person{flex-wrap:wrap}
+    .photo-grid figcaption{align-items:flex-start}
+    .photo-grid figcaption .number{flex:none}
+    .hero-cta .button,.gallery-cta .button,.submit-button,.mobile-cta .button{font-size:16px!important}
+    .footer-inner,.footer-links{flex-wrap:wrap}
+    @media(max-width:760px){.hero-caption{display:block}.hero-caption span{display:block}.hero-caption span+span{margin-top:6px}.review-top{flex-wrap:wrap}.review-controls{margin-left:auto}.footer-links{gap:16px}}
+    .quote-step{border:0;padding:0;margin:0;min-width:0}
+    .quote-step legend{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--green);margin-bottom:20px;line-height:1.4;padding:0}
+    .quote-progress{padding:12px 16px;margin:0 0 24px;background:var(--soft);color:var(--green);border-radius:8px;font-size:14px;line-height:1.5}
+    .field select{font-family:var(--serif);width:100%;min-height:52px;padding:12px;font-size:16px;line-height:1.5;color:var(--ink);background:#fff;border:1px solid #7D8E82;border-radius:8px}
+    .field select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+    .quote-back{display:block;margin:18px auto 0;border:0;background:transparent;color:var(--green);text-decoration:underline;text-underline-offset:4px;padding:10px;font:inherit;font-size:14px;min-height:44px}
+    @media(max-width:760px){.quote-step .form-row{grid-template-columns:1fr;gap:0}.quote-step legend{font-size:18px}.field input::placeholder{font-size:16px}}
+    :root{--paper:#F7F4EE;--white:#FFFFFF;--ink:#27332F;--green:#214A3C;--green-hover:#17392E;--muted:#55655C;--line:#c9d5cc;--soft:#DCE7DE;--gold:#D6A65C}
+    .brand img{filter:none}
   </style>
 </head>
 <body id="top">
@@ -274,7 +352,7 @@ Do not run real advertising until that inbox test passes.
             <figcaption><span class="number">03</span>More room for family time.</figcaption>
           </figure>
         </div>
-        <div class="gallery-cta"><a class="button" href="#quote">Get My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><p>Find out what cleaning would cost for your home.</p></div>
+        <div class="gallery-cta"><a class="button" href="#quote">Get My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><p>Find the right cleaning plan for your home.</p></div>
       </div>
     </section>
     <section class="quote-section" id="quote" aria-labelledby="quote-title">
@@ -289,19 +367,27 @@ Do not run real advertising until that inbox test passes.
         <div class="form-card">
           <div id="form-content">
             <div class="form-label">Let’s take cleaning off your plate</div>
-            <h3 id="quote-title">What Would Cleaning Cost for Your Home?</h3>
-            <p class="form-intro">Tell us about your home to request a cleaning quote.</p>
-            <form class="quote-form" id="quote-form" method="POST" action="#quote">
-              <div class="form-row">
+            <h3 id="quote-title">Get Your Personalized Cleaning Quote</h3>
+            <p class="form-intro">Answer a few easy questions so we can recommend the right cleaning for your home.</p>
+            <form class="quote-form" id="quote-form" method="POST" action="#quote" novalidate>
+              <p class="quote-progress" id="quote-progress" aria-live="polite">Step 1 of 2 · Your home</p>
+              <fieldset class="quote-step" id="home-step"><legend>A few quick details about your home</legend>
+                <div class="field"><label for="zip">What’s your ZIP code?</label><input id="zip" name="ZIP code" autocomplete="postal-code" inputmode="numeric" placeholder="e.g. 25530" pattern="[0-9]{5}(-[0-9]{4})?" maxlength="10" title="Enter a 5-digit ZIP code" required></div>
+                <div class="field"><label for="bedrooms">How many bedrooms?</label><select id="bedrooms" name="Bedrooms" required><option value="">Choose an option</option><option>0 / Studio</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+                <div class="field"><label for="bathrooms">How many bathrooms?</label><select id="bathrooms" name="Bathrooms" required><option value="">Choose an option</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select></div>
+                <div class="field"><label for="square-feet">About how big is your home?</label><select id="square-feet" name="Approximate square footage" required><option value="">Choose an option</option><option>Under 1,000 sq ft</option><option>1,000–1,499 sq ft</option><option>1,500–1,999 sq ft</option><option>2,000–2,499 sq ft</option><option>2,500–2,999 sq ft</option><option>3,000–3,999 sq ft</option><option>4,000+ sq ft</option><option>I’m not sure</option></select></div>
+                <div class="field"><label for="service-type">What kind of cleaning do you need?</label><select id="service-type" name="Cleaning type" required><option value="">Choose an option</option><option>Standard cleaning</option><option>Deep cleaning</option><option>Move-in / move-out cleaning</option><option>Help me choose</option></select></div>
+                <div class="field"><label for="frequency">How often would you like help?</label><select id="frequency" name="Preferred frequency" required><option value="">Choose an option</option><option>Just once</option><option>Every week</option><option>Every two weeks</option><option>Every month</option><option>I’m not sure yet</option></select></div>
+                <button class="button submit-button" id="quote-continue" type="button">Continue to My Quote →</button>
+              </fieldset>
+              <fieldset class="quote-step" id="contact-step" hidden><legend>Where should we send your quote?</legend>
                 <div class="field"><label for="full-name">Your name</label><input id="full-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100"></div>
-                <div class="field"><label for="zip">ZIP code</label><input id="zip" name="ZIP code" autocomplete="postal-code" inputmode="numeric" placeholder="ZIP code" pattern="[0-9]{5}(-[0-9]{4})?" maxlength="10" title="Enter a 5-digit ZIP code" required></div>
-              </div>
               <div class="form-row">
                 <div class="field"><label for="phone">Phone <span class="optional">(or email)</span></label><input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="Your phone number" maxlength="30" aria-describedby="contact-help"></div>
                 <div class="field"><label for="email">Email <span class="optional">(or phone)</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="Your email address" maxlength="254" aria-describedby="contact-help"></div>
               </div>
               <p class="contact-help" id="contact-help">Add a phone number or email so we can get back to you.</p>
-              <div class="field"><label for="cleaning-note">What could you use help with? <span class="optional">(optional)</span></label><textarea id="cleaning-note" name="Cleaning needed" placeholder="A first clean? Help keeping up? Tell us what you have in mind." rows="3" maxlength="3000"></textarea></div>
+              <div class="field"><label for="cleaning-note">Pets or areas needing extra attention? <span class="optional">(optional)</span></label><textarea id="cleaning-note" name="Additional notes" placeholder="e.g. Two dogs, or extra attention in the kitchen." rows="3" maxlength="3000"></textarea></div>
               <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="_honey" tabindex="-1" autocomplete="off"></div>
               <input type="hidden" name="_subject" value="New cleaning quote request | Country Roads Cleaning Solutions">
               <input type="hidden" name="_template" value="table">
@@ -309,7 +395,9 @@ Do not run real advertising until that inbox test passes.
               <p class="form-status" id="form-status" role="alert" hidden></p>
               <button class="button submit-button" id="form-submit" type="submit" disabled>Request My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
               <noscript><p class="form-status">Please enable JavaScript to request a quote through this form.</p></noscript>
-              <p class="form-footnote">By submitting, you ask us to contact you about your cleaning quote.<br>Requesting a quote does not book a cleaning.</p>
+              <p class="form-footnote">We’ll use your contact details to follow up about your cleaning quote.</p>
+              <button class="quote-back" id="quote-back" type="button">← Back to home details</button>
+              </fieldset>
             </form>
           </div>
           <div class="form-success" id="form-success" role="status" hidden><div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="form-label">One step closer to a cleaner home</div><h3>Thank you for reaching out.</h3><p>Your cleaning quote request has been submitted. We’ll use the contact details you provided to follow up about your home and what you need.</p><button type="button" id="new-request">Request another quote</button></div>
@@ -320,7 +408,7 @@ Do not run real advertising until that inbox test passes.
   <footer class="site-footer"><div class="wrap footer-inner"><div class="footer-brand">Country Roads Cleaning Solutions<small>© <span id="copyright-year">2026</span> Country Roads Cleaning Solutions. All rights reserved.</small></div><div class="footer-links"><button id="privacy-open" type="button">Privacy</button><a href="#quote">Request a quote</a><a href="#top">Back to top ↑</a></div></div></footer>
   <div class="mobile-cta" id="mobile-cta"><a class="button" href="#quote">Get My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
   <dialog class="photo-dialog" id="photo-dialog" aria-label="Home photo viewer"><div class="photo-dialog-inner"><button class="dialog-close" type="button" aria-label="Close photo viewer" data-close="photo-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><img id="lightbox-image" alt=""><div class="photo-dialog-footer"><span id="lightbox-caption"></span><div class="review-controls"><button class="icon-button" type="button" id="photo-prev" aria-label="Previous home photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><button class="icon-button" type="button" id="photo-next" aria-label="Next home photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div></div></div></dialog>
-  <dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title"><button class="dialog-close" type="button" aria-label="Close privacy notice" data-close="privacy-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><h2 id="privacy-title">Your quote request &amp; privacy</h2><p>When you request a quote, you share your name, ZIP code, contact details, and any note you choose to include. Country Roads Cleaning Solutions uses these details to respond to your inquiry and discuss cleaning services with you.</p><p>The quote form is delivered through FormSubmit, a third-party form service. It processes form information and spam verification according to its <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">privacy policy</a>. If available in the page address, campaign details are included with your inquiry to show how you found us.</p><p>Please leave out sensitive information such as payment details, alarm codes, and door codes. Requesting a quote does not book a service.</p></dialog>
+  <dialog class="privacy-dialog" id="privacy-dialog" aria-labelledby="privacy-title"><button class="dialog-close" type="button" aria-label="Close privacy notice" data-close="privacy-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button><h2 id="privacy-title">Your quote request &amp; privacy</h2><p>When you request a quote, you share your name, ZIP code, home details, cleaning preferences, contact details, and any note you choose to include. Country Roads Cleaning Solutions uses these details to respond to your inquiry and discuss cleaning services with you.</p><p>The quote form is delivered through FormSubmit, a third-party form service. It processes form information and spam verification according to its <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">privacy policy</a>. If available in the page address, campaign details are included with your inquiry to show how you found us.</p><p>Please leave out sensitive information such as payment details, alarm codes, and door codes.</p></dialog>
   <script>
     // THE ONLY REQUIRED SETTING: enter the email that should receive quote requests.
     const QUOTE_EMAIL = "getheavenlycleaningsolutions@gmail.com";
@@ -437,6 +525,24 @@ Do not run real advertising until that inbox test passes.
       // Standard FormSubmit POST keeps server-side spam verification enabled.
       const form = $('quote-form');
       const email = $('email'), phone = $('phone');
+      let quoteStep = 1;
+      function showQuoteStep(step, focus = true) {
+        quoteStep = step;
+        $('home-step').hidden = step !== 1;
+        $('contact-step').hidden = step !== 2;
+        $('quote-progress').textContent = 'Step ' + step + ' of 2 · ' + (step === 1 ? 'Your home' : 'Your details');
+        if (focus) $(step === 1 ? 'zip' : 'full-name').focus();
+      }
+      function homeIsValid() {
+        return [...$('home-step').querySelectorAll('input,select')].every(input => input.checkValidity());
+      }
+      function continueQuote() {
+        if (homeIsValid()) showQuoteStep(2);
+        else [...$('home-step').querySelectorAll('input,select')].find(input => !input.checkValidity()).reportValidity();
+      }
+      $('quote-continue').addEventListener('click', continueQuote);
+      $('quote-back').addEventListener('click', () => showQuoteStep(1));
+      showQuoteStep(1, false);
       const configured = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(QUOTE_EMAIL);
       if (configured) form.action = `https://formsubmit.co/${encodeURIComponent(QUOTE_EMAIL.trim())}`;
       if (/^https?:$/.test(location.protocol)) $('form-next').value = `${location.origin}${location.pathname}?quote=sent#quote`;
@@ -452,6 +558,8 @@ Do not run real advertising until that inbox test passes.
       }
       [email,phone].forEach(input => input.addEventListener('input', validateContacts));
       form.addEventListener('submit', event => {
+        if (quoteStep === 1) { event.preventDefault(); continueQuote(); return; }
+        if (!homeIsValid()) { event.preventDefault(); showQuoteStep(1); continueQuote(); return; }
         validateContacts();
         $('full-name').setCustomValidity($('full-name').value.trim() ? '' : 'Please enter your name.');
         if (!form.reportValidity()) { event.preventDefault(); return; }
@@ -486,7 +594,7 @@ Do not run real advertising until that inbox test passes.
         $('quote-form-title').id = 'quote-title';
         $('form-content').hidden = false; $('form-success').hidden = true;
         history.replaceState(null,'',`${location.pathname}#quote`);
-        form.reset(); $('full-name').focus(); syncMobile();
+        form.reset(); showQuoteStep(1); syncMobile();
       });
     })();
   </script>
