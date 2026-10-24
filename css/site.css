@@ -270,9 +270,9 @@ h3 { font-size: 26px; line-height: 1.25; margin: 0 0 8px; }
 .quote-story h2 { font-size: 34px; color: var(--paper); max-width: 460px; }
 .quote-story > p { font-size: 18px; line-height: 1.65; color: var(--paper); margin-bottom: 14px; max-width: 460px; }
 .quote-story a { color: var(--paper); }
-.owner { display: flex; align-items: center; gap: 18px; border-top: 1px solid #537060; padding-top: 22px; margin-top: 22px; }
-.owner img { height: 185px; width: 155px; border-radius: 10px; object-fit: cover; object-position: 48% 61%; flex: none; }
-.owner figcaption { font-size: 14px; line-height: 1.6; max-width: 240px; }
+.owner { display: flex; flex-direction: column; align-items: stretch; gap: 16px; border-top: 1px solid #537060; padding-top: 22px; margin-top: 22px; max-width: 460px; }
+.owner img { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 10px; object-fit: cover; object-position: 48% 61%; display: block; }
+.owner figcaption { font-size: 15px; line-height: 1.6; max-width: none; }
 .owner figcaption strong { font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 1.25; display: block; margin-bottom: 8px; color: var(--paper); }
 .owner figcaption span { color: var(--soft); }
 

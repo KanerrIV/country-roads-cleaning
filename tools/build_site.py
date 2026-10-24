@@ -580,11 +580,11 @@ def quote_form(include_owner: bool) -> str:
     if include_owner:
         owner = f"""
         <figure class="owner">
-          {photo("team", [400], (400, 513), "A member of the Country Roads Cleaning Solutions team", "155px", lazy=True)}
           <figcaption>
             <strong>The team behind Country Roads.</strong>
             <span>Years of experience cleaning homes across the Tri-State, from our base in Kenova, West Virginia.</span>
           </figcaption>
+          {photo("team", [400], (400, 513), "A member of the Country Roads Cleaning Solutions team", "(max-width: 760px) 92vw, 460px", lazy=True)}
         </figure>"""
     return f"""
     <section class="quote-section" id="quote" aria-labelledby="quote-heading">
@@ -594,7 +594,7 @@ def quote_form(include_owner: bool) -> str:
           <h2 id="quote-heading">Your next free Saturday could look different.</h2>
           <p>You already have plenty on your plate. Let us help with the cleaning.</p>
           <p>Call or text <a href="{TEL}">{PHONE}</a>, or tell us a little about the home or business. You don't have to figure out the whole plan before asking for a quote.</p>
-          <p>Monday–Friday, 9:00 AM–5:00 PM. Closed Saturday and Sunday. We serve homes and businesses within about 25 miles of Kenova.</p>
+          <p>Monday–Friday, 9:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.</p>
           {owner}
         </div>
         <div class="form-card">
@@ -1400,6 +1400,48 @@ def render_apply() -> str:
     return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
 
 
+def render_quote() -> str:
+    page = {
+        "path": "/quote/",
+        "title": "Request a Cleaning Quote | Country Roads Cleaning Solutions",
+        "description": "Request a free house or office cleaning quote from Country Roads Cleaning Solutions, a women-owned cleaning company in Kenova, WV.",
+        "noindex": True,
+    }
+    main = f"""
+    <section class="page-hero">
+      <div class="wrap prose">
+        <p class="eyebrow">Free quote</p>
+        <h1>Request a cleaning quote</h1>
+        <p class="lede">We’re a women-owned, licensed, and insured cleaning company based in Kenova, WV. We bring our own supplies and serve homes and businesses within about 25 miles. Tell us about your space and we’ll follow up with a personalized quote.</p>
+        <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 9:00 AM–5:00 PM.</p>
+      </div>
+    </section>
+    <section class="article"><div class="article-inner">
+      <div class="form-card apply-card">
+        <p class="form-status apply-thanks" id="q-thanks" hidden>Thanks for reaching out! We got your quote request and will follow up soon.</p>
+        <form class="apply-form quote-page-form" id="q-form" method="POST" action="https://formsubmit.co/{EMAIL}">
+          <fieldset class="quote-step">
+            <legend>A few quick details about the space</legend>
+{quote_home_fields("q-")}
+          </fieldset>
+          <fieldset class="quote-step">
+            <legend>Where should we send your quote?</legend>
+{quote_contact_fields("q-")}
+          </fieldset>
+          <div class="honeypot" aria-hidden="true"><label for="q-website">Leave this field empty</label><input id="q-website" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="_subject" value="New quote request | Country Roads Cleaning Solutions">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="{BASE}/quote/?sent=1">
+          <button class="button submit-button" type="submit">Request My Cleaning Quote {ARROW}</button>
+          <p class="form-footnote">We’ll use your contact details only to follow up about this cleaning quote.</p>
+        </form>
+      </div>
+    </div></section>
+    <script>(function(){{var f=document.getElementById("q-form");if(new URLSearchParams(location.search).has("sent")){{document.getElementById("q-thanks").hidden=false;f.hidden=true;return;}}var p=document.getElementById("q-phone"),e=document.getElementById("q-email");function c(){{e.setCustomValidity("");p.setCustomValidity("");if(!e.value.trim()&&!p.value.trim())e.setCustomValidity("Please add a phone number or email so we can contact you.");if(p.value.trim()){{var d=p.value.replace(/\D/g,"");if(d.length<7||d.length>15||/[A-Za-z]/.test(p.value))p.setCustomValidity("Please enter a valid phone number.");}}}}p.addEventListener("input",c);e.addEventListener("input",c);f.addEventListener("submit",function(ev){{c();if(!f.reportValidity()){{ev.preventDefault();return;}}var q=new URLSearchParams(location.search);["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"].forEach(function(k){{if(q.get(k)){{var i=document.createElement("input");i.type="hidden";i.name=k;i.value=q.get(k).slice(0,500);f.appendChild(i);}}}});}});}})();</script>
+    """
+    return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
+
+
 def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
@@ -1697,6 +1739,8 @@ def main() -> None:
         write_text(page["file"], markup)
     write_text(ROOT / "404.html", not_found_html)
     write_text(ROOT / "apply" / "index.html", render_apply())
+    quote_html = render_quote()
+    write_text(ROOT / "quote" / "index.html", quote_html)
     urls = [BASE + page["path"] for page, _markup in pages]
     sitemap = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -1719,6 +1763,31 @@ def main() -> None:
         sys.exit("404 should be noindex")
     if "/404.html" in (ROOT / "sitemap.xml").read_text(encoding="utf-8"):
         sys.exit("404 leaked into the sitemap")
+    # /quote/ is an unlisted soft-lead page: noindex, out of the sitemap and menu, no mobile quote bar.
+    quote_errors = []
+    if '<meta name="robots" content="noindex">' not in quote_html:
+        quote_errors.append("missing noindex")
+    if "/quote/" in (ROOT / "sitemap.xml").read_text(encoding="utf-8"):
+        quote_errors.append("leaked into the sitemap")
+    if any(href.startswith("/quote") for href, _label in NAV):
+        quote_errors.append("listed in the main menu")
+    if 'id="mobile-cta"' in quote_html:
+        quote_errors.append("has the mobile quote bar")
+    if quote_html.count("<h1") != 1:
+        quote_errors.append("h1 count")
+    for forbidden in ("Kane", "Katlyn", "Walnut", "1801", "$", "rating", "stars"):
+        body = quote_html.split("</head>", 1)[1]
+        if forbidden.lower() in body.lower():
+            quote_errors.append(f"forbidden term {forbidden}")
+    if f'action="https://formsubmit.co/{EMAIL}"' not in quote_html or f'value="{BASE}/quote/?sent=1"' not in quote_html:
+        quote_errors.append("FormSubmit action/_next wrong")
+    if quote_home_fields() not in quote_form(False) or quote_contact_fields() not in quote_form(False):
+        quote_errors.append("fields drifted from the site quote form")
+    if PHONE not in quote_html or "9:00 AM" not in quote_html:
+        quote_errors.append("phone/hours not visible")
+    if quote_errors:
+        sys.exit("/quote/ validation failed: " + "; ".join(quote_errors))
+    print("Validated /quote/ (noindex, unlisted, no mobile bar, fields match site form).")
     print("CNAME unchanged:", cname.strip())
 
 
