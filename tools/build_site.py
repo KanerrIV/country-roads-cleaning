@@ -765,7 +765,7 @@ def homepage() -> dict:
         "file": ROOT / "index.html",
         "title": "House Cleaning in Kenova & Huntington, WV | Country Roads",
         "description": "Women-owned house cleaning based in Kenova, WV for Huntington, Ashland, Ironton, and the Tri-State. Licensed and insured. Call (304) 710-5430.",
-        "h1": "House cleaning in Kenova, Huntington, and the Tri-State",
+        "h1": "Get Your Evenings and Weekends Back Without Letting the House Fall Behind",
         "faqs": FAQ_HOME,
         "service_ids": [],
         "crumbs": [],
@@ -798,9 +798,9 @@ def homepage_main() -> str:
     <section class="hero" aria-labelledby="page-title">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Women-owned · Kenova, West Virginia</p>
-          <h1 id="page-title">House cleaning in Kenova, Huntington, and the Tri-State</h1>
-          <p class="subhead">Get your evenings and weekends back without letting the house fall behind. Country Roads Cleaning Solutions cleans homes and small businesses from our base in Kenova.</p>
+          <p class="eyebrow">House cleaning in Kenova, Huntington &amp; the Tri-State</p>
+          <h1 id="page-title">Get Your Evenings and Weekends Back Without Letting the House Fall Behind</h1>
+          <p class="subhead">Women-owned and local. Country Roads Cleaning Solutions cleans homes and small businesses from our base in Kenova.</p>
           <div class="trust-row">
             <span>Mon–Fri, 9:00 AM–5:00 PM</span>
             <span>Licensed and insured</span>
