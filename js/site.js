@@ -1,4 +1,4 @@
-const QUOTE_EMAIL = "getheavenlycleaningsolutions@gmail.com";
+const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
 
 (() => {
   "use strict";
