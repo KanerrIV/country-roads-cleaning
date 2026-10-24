@@ -575,6 +575,38 @@ def privacy_dialog() -> str:
   </dialog>"""
 
 
+def quote_home_fields(prefix: str = "") -> str:
+    """Home-detail fields shared by the site quote form and /quote/. Keep labels, names, and options identical."""
+    html_ = f"""
+                <div class="field"><label for="zip">What's your ZIP code?</label><input id="zip" name="ZIP code" autocomplete="postal-code" inputmode="numeric" placeholder="e.g. 25530" pattern="[0-9]{{5}}(-[0-9]{{4}})?" maxlength="10" title="Enter a 5-digit ZIP code" required></div>
+                <div class="field"><label for="bedrooms">How many bedrooms?</label><select id="bedrooms" name="Bedrooms" required><option value="">Choose an option</option><option>0 / Studio</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option><option>Not a home (office or other)</option></select></div>
+                <div class="field"><label for="bathrooms">How many bathrooms?</label><select id="bathrooms" name="Bathrooms" required><option value="">Choose an option</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option><option>Not a home (office or other)</option></select></div>
+                <div class="field"><label for="square-feet">About how big is the home or space?</label><select id="square-feet" name="Approximate square footage" required><option value="">Choose an option</option><option>Under 1,000 sq ft</option><option>1,000–1,499 sq ft</option><option>1,500–1,999 sq ft</option><option>2,000–2,499 sq ft</option><option>2,500–2,999 sq ft</option><option>3,000–3,999 sq ft</option><option>4,000+ sq ft</option><option>I'm not sure</option></select></div>
+                <div class="field"><label for="service-type">What kind of cleaning do you need?</label><select id="service-type" name="Cleaning type" required><option value="">Choose an option</option><option>Standard cleaning</option><option>Deep cleaning</option><option>Move-in / move-out cleaning</option><option>Apartment or condo cleaning</option><option>Rental or Airbnb turnover</option><option>Holiday or guest-ready cleaning</option><option>Commercial or office cleaning</option><option>Help me choose</option></select></div>
+                <div class="field"><label for="frequency">How often would you like help?</label><select id="frequency" name="Preferred frequency" required><option value="">Choose an option</option><option>Just once</option><option>Every week</option><option>Every two weeks</option><option>Every month</option><option>I'm not sure yet</option></select></div>"""
+    return _prefix_ids(html_.strip("\n"), prefix, ["zip", "bedrooms", "bathrooms", "square-feet", "service-type", "frequency"])
+
+
+def quote_contact_fields(prefix: str = "") -> str:
+    """Contact fields shared by the site quote form and /quote/."""
+    html_ = f"""
+                <div class="field"><label for="full-name">Your name</label><input id="full-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100"></div>
+                <div class="form-row">
+                  <div class="field"><label for="phone">Phone <span class="optional">(or email)</span></label><input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="Your phone number" maxlength="30" aria-describedby="contact-help"></div>
+                  <div class="field"><label for="email">Email <span class="optional">(or phone)</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="Your email address" maxlength="254" aria-describedby="contact-help"></div>
+                </div>
+                <p class="contact-help" id="contact-help">Add a phone number or email so we can get back to you.</p>
+                <div class="field"><label for="cleaning-note">Pets, laundry, or areas needing extra attention? <span class="optional">(optional)</span></label><textarea id="cleaning-note" name="Additional notes" placeholder="For example: two dogs, a linen change, or extra attention in the kitchen." rows="3" maxlength="3000"></textarea></div>"""
+    return _prefix_ids(html_.strip("\n"), prefix, ["full-name", "phone", "email", "contact-help", "cleaning-note"])
+
+
+def _prefix_ids(markup: str, prefix: str, ids: list[str]) -> str:
+    if not prefix:
+        return markup
+    for id_ in ids:
+        markup = markup.replace(f'id="{id_}"', f'id="{prefix}{id_}"').replace(f'for="{id_}"', f'for="{prefix}{id_}"').replace(f'aria-describedby="{id_}"', f'aria-describedby="{prefix}{id_}"')
+    return markup
+
 def quote_form(include_owner: bool) -> str:
     owner = ""
     if include_owner:
@@ -606,23 +638,12 @@ def quote_form(include_owner: bool) -> str:
               <p class="quote-progress" id="quote-progress" aria-live="polite">Step 1 of 2 · Your home</p>
               <fieldset class="quote-step" id="home-step">
                 <legend>A few quick details about the space</legend>
-                <div class="field"><label for="zip">What's your ZIP code?</label><input id="zip" name="ZIP code" autocomplete="postal-code" inputmode="numeric" placeholder="e.g. 25530" pattern="[0-9]{{5}}(-[0-9]{{4}})?" maxlength="10" title="Enter a 5-digit ZIP code" required></div>
-                <div class="field"><label for="bedrooms">How many bedrooms?</label><select id="bedrooms" name="Bedrooms" required><option value="">Choose an option</option><option>0 / Studio</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option><option>Not a home (office or other)</option></select></div>
-                <div class="field"><label for="bathrooms">How many bathrooms?</label><select id="bathrooms" name="Bathrooms" required><option value="">Choose an option</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option><option>Not a home (office or other)</option></select></div>
-                <div class="field"><label for="square-feet">About how big is the home or space?</label><select id="square-feet" name="Approximate square footage" required><option value="">Choose an option</option><option>Under 1,000 sq ft</option><option>1,000–1,499 sq ft</option><option>1,500–1,999 sq ft</option><option>2,000–2,499 sq ft</option><option>2,500–2,999 sq ft</option><option>3,000–3,999 sq ft</option><option>4,000+ sq ft</option><option>I'm not sure</option></select></div>
-                <div class="field"><label for="service-type">What kind of cleaning do you need?</label><select id="service-type" name="Cleaning type" required><option value="">Choose an option</option><option>Standard cleaning</option><option>Deep cleaning</option><option>Move-in / move-out cleaning</option><option>Apartment or condo cleaning</option><option>Rental or Airbnb turnover</option><option>Holiday or guest-ready cleaning</option><option>Commercial or office cleaning</option><option>Help me choose</option></select></div>
-                <div class="field"><label for="frequency">How often would you like help?</label><select id="frequency" name="Preferred frequency" required><option value="">Choose an option</option><option>Just once</option><option>Every week</option><option>Every two weeks</option><option>Every month</option><option>I'm not sure yet</option></select></div>
+{quote_home_fields()}
                 <button class="button submit-button" id="quote-continue" type="button">Continue to my quote →</button>
               </fieldset>
               <fieldset class="quote-step" id="contact-step" hidden>
                 <legend>Where should we send your quote?</legend>
-                <div class="field"><label for="full-name">Your name</label><input id="full-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100"></div>
-                <div class="form-row">
-                  <div class="field"><label for="phone">Phone <span class="optional">(or email)</span></label><input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="Your phone number" maxlength="30" aria-describedby="contact-help"></div>
-                  <div class="field"><label for="email">Email <span class="optional">(or phone)</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="Your email address" maxlength="254" aria-describedby="contact-help"></div>
-                </div>
-                <p class="contact-help" id="contact-help">Add a phone number or email so we can get back to you.</p>
-                <div class="field"><label for="cleaning-note">Pets, laundry, or areas needing extra attention? <span class="optional">(optional)</span></label><textarea id="cleaning-note" name="Additional notes" placeholder="For example: two dogs, a linen change, or extra attention in the kitchen." rows="3" maxlength="3000"></textarea></div>
+{quote_contact_fields()}
                 <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="_honey" tabindex="-1" autocomplete="off"></div>
                 <input type="hidden" name="_subject" value="New cleaning quote request | Country Roads Cleaning Solutions">
                 <input type="hidden" name="_template" value="table">
@@ -1437,7 +1458,7 @@ def render_quote() -> str:
         </form>
       </div>
     </div></section>
-    <script>(function(){{var f=document.getElementById("q-form");if(new URLSearchParams(location.search).has("sent")){{document.getElementById("q-thanks").hidden=false;f.hidden=true;return;}}var p=document.getElementById("q-phone"),e=document.getElementById("q-email");function c(){{e.setCustomValidity("");p.setCustomValidity("");if(!e.value.trim()&&!p.value.trim())e.setCustomValidity("Please add a phone number or email so we can contact you.");if(p.value.trim()){{var d=p.value.replace(/\D/g,"");if(d.length<7||d.length>15||/[A-Za-z]/.test(p.value))p.setCustomValidity("Please enter a valid phone number.");}}}}p.addEventListener("input",c);e.addEventListener("input",c);f.addEventListener("submit",function(ev){{c();if(!f.reportValidity()){{ev.preventDefault();return;}}var q=new URLSearchParams(location.search);["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"].forEach(function(k){{if(q.get(k)){{var i=document.createElement("input");i.type="hidden";i.name=k;i.value=q.get(k).slice(0,500);f.appendChild(i);}}}});}});}})();</script>
+    <script>(function(){{var f=document.getElementById("q-form");if(new URLSearchParams(location.search).has("sent")){{document.getElementById("q-thanks").hidden=false;f.hidden=true;return;}}var p=document.getElementById("q-phone"),e=document.getElementById("q-email");function c(){{e.setCustomValidity("");p.setCustomValidity("");if(!e.value.trim()&&!p.value.trim())e.setCustomValidity("Please add a phone number or email so we can contact you.");if(p.value.trim()){{var d=p.value.replace(/\\D/g,"");if(d.length<7||d.length>15||/[A-Za-z]/.test(p.value))p.setCustomValidity("Please enter a valid phone number.");}}}}p.addEventListener("input",c);e.addEventListener("input",c);f.addEventListener("submit",function(ev){{c();if(!f.reportValidity()){{ev.preventDefault();return;}}var q=new URLSearchParams(location.search);["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"].forEach(function(k){{if(q.get(k)){{var i=document.createElement("input");i.type="hidden";i.name=k;i.value=q.get(k).slice(0,500);f.appendChild(i);}}}});}});}})();</script>
     """
     return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
 
