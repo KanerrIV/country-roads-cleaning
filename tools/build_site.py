@@ -823,7 +823,7 @@ def homepage_main() -> str:
             <a class="button" href="#quote">Get my cleaning quote {ARROW}</a>
             <a class="button ghost" href="{TEL}">Call {PHONE}</a>
           </div>
-          <p class="cta-note">Tell us about your home. We’ll take it from there. Closed Saturday and Sunday.</p>
+          <p class="cta-note">Tell us about your home. We’ll take it from there.</p>
         </div>
         <figure class="hero-visual">
           <div class="hero-image-frame">
@@ -834,6 +834,7 @@ def homepage_main() -> str:
         </figure>
       </div>
     </section>
+    {quote_form(True)}
     <article class="article">
       <div class="article-inner">
         <div class="section-label">A little help with the house</div>
@@ -884,7 +885,6 @@ def homepage_main() -> str:
       </div>
     </section>
     {faq_html(FAQ_HOME, "Questions we hear before a first cleaning")}
-    {quote_form(True)}
     """
 
 
