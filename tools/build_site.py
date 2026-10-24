@@ -260,11 +260,14 @@ def related(links: list[tuple[str, str]]) -> str:
     return f'<h2>Related pages</h2><div class="related">{items}</div>'
 
 
+FAQ_CHEVRON = '<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>'
+
+
 def faq_html(faqs: list[tuple[str, str]], heading: str) -> str:
     items = []
     for question, answer in faqs:
         items.append(
-            f'<div class="faq-item"><h3>{esc(question)}</h3><p>{linkify(answer)}</p></div>'
+            f'<details class="faq-item"><summary><h3>{esc(question)}</h3>{FAQ_CHEVRON}</summary><p>{linkify(answer)}</p></details>'
         )
     return (
         f'<section class="faq-section" id="faq"><div class="wrap prose"><h2>{esc(heading)}</h2>'
