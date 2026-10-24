@@ -296,6 +296,7 @@ def area_served_nodes() -> list[dict]:
 def business_node() -> dict:
     return {
         "@type": ["HouseCleaner", "LocalBusiness"],
+        "sameAs": [GBP_URL],
         "@id": BUSINESS_ID,
         "name": "Country Roads Cleaning Solutions",
         "legalName": "Country Roads Cleaning Solutions, LLC",
@@ -435,13 +436,15 @@ def graph_for(page: dict) -> dict:
     return {"@context": "https://schema.org", "@graph": graph}
 
 
+GBP_URL = "https://www.google.com/maps?cid=7570965002888918614"
+REVIEW_URL = "https://g.page/r/CVa2G7SOeBFpEBM/review"
+
+
 def json_ld(page: dict) -> str:
     payload = json.dumps(graph_for(page), ensure_ascii=False, indent=2)
     return (
-        "<!-- TODO(owner): add a sameAs array on the LocalBusiness node once these URLs are final.\n"
-        "     Google Business Profile: paste the verified profile URL after the existing application is verified.\n"
-        "     Facebook: https://www.facebook.com/profile.php?id=61592053743546\n"
-        "     Rename that Facebook page to Country Roads Cleaning Solutions before listing it in sameAs. -->\n"
+        "<!-- TODO(owner): add the Facebook page to sameAs after it is renamed to Country Roads Cleaning Solutions:\n"
+        "     https://www.facebook.com/profile.php?id=61592053743546 -->\n"
         f'<script type="application/ld+json">\n{payload}\n</script>'
     )
 
@@ -547,6 +550,8 @@ def footer(include_about: bool) -> str:
     <div class="wrap footer-links">
       <button id="privacy-open" type="button">Privacy</button>
       <a href="/#quote">Request a quote</a>
+      <a href="{GBP_URL}" target="_blank" rel="noopener noreferrer">Google reviews</a>
+      <a href="{REVIEW_URL}" target="_blank" rel="noopener noreferrer">Leave a review</a>
       <a href="https://www.facebook.com/profile.php?id=61592053743546" target="_blank" rel="noopener noreferrer">Facebook</a>
       <a href="#top">Back to top</a>
       <span>© <span id="copyright-year">2026</span> Country Roads Cleaning Solutions</span>
@@ -723,6 +728,7 @@ def reviews_html() -> str:
         </div>
       </div>
       <p class="sr-only" id="review-announcement" aria-live="polite"></p>
+      <p class="review-cta"><a class="button small" href="{REVIEW_URL}" target="_blank" rel="noopener noreferrer">Leave us a Google review {ARROW}</a></p>
     </div>"""
 
 
@@ -1396,8 +1402,8 @@ def check_business(node: dict, errors: list[str], where: str) -> None:
         url = node.get(key, {}).get("url", "")
         if not url.startswith(BASE + "/assets/"):
             errors.append(f"{where}: {key} url {url}")
-    if "sameAs" in node:
-        errors.append(f"{where}: sameAs should stay a TODO comment, not a property, until the owner adds URLs")
+    if node.get("sameAs") != [GBP_URL]:
+        errors.append(f"{where}: sameAs should be the Google Business Profile URL")
 
 
 def validate(pages: list[tuple[dict, str]]) -> None:
@@ -1448,8 +1454,6 @@ def validate(pages: list[tuple[dict, str]]) -> None:
             errors.append(f"{page['path']}: Heavenly outside the email address")
         if re.search(r"Country Road(?!s)", markup):
             errors.append(f"{page['path']}: singular Road in the name")
-        if "sameAs" in markup and "TODO(owner): add a sameAs" not in markup:
-            errors.append(f"{page['path']}: unexpected sameAs")
         if not parser.json_blocks:
             errors.append(f"{page['path']}: no JSON-LD")
             continue
