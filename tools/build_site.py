@@ -67,6 +67,9 @@ TOWN_LINKS = {
     "Ironton": "/ironton-oh-house-cleaning/",
     "Kenova": "/kenova-ceredo-house-cleaning/",
     "Ceredo": "/kenova-ceredo-house-cleaning/",
+    "Barboursville": "/barboursville-wv-house-cleaning/",
+    "Milton": "/barboursville-wv-house-cleaning/#milton",
+    "Lavalette": "/barboursville-wv-house-cleaning/#lavalette",
 }
 
 SERVICES = [
@@ -198,6 +201,7 @@ NAV = [
     ("/office-cleaning-huntington-wv/", "Huntington offices"),
     ("/holiday-cleaning/", "Holiday"),
     ("/huntington-wv-house-cleaning/", "Huntington"),
+    ("/barboursville-wv-house-cleaning/", "Barboursville"),
     ("/ashland-ky-house-cleaning/", "Ashland"),
     ("/ironton-oh-house-cleaning/", "Ironton"),
     ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"),
@@ -527,10 +531,11 @@ def footer(include_about: bool) -> str:
     ]
     area_links = [
         '<li><a href="/huntington-wv-house-cleaning/">Huntington, WV</a></li>',
+        '<li><a href="/barboursville-wv-house-cleaning/">Barboursville, WV</a></li>',
         '<li><a href="/ashland-ky-house-cleaning/">Ashland, KY</a></li>',
         '<li><a href="/ironton-oh-house-cleaning/">Ironton, OH</a></li>',
         '<li><a href="/kenova-ceredo-house-cleaning/">Kenova &amp; Ceredo, WV</a></li>',
-        "<li>And Barboursville, Wayne, Milton, Lavalette, Flatwoods, Russell, Catlettsburg, Grayson, Raceland, Greenup, South Point, Coal Grove, Chesapeake, Proctorville, and Burlington.</li>",
+        "<li>And Wayne, <a href=\"/barboursville-wv-house-cleaning/#milton\">Milton</a>, <a href=\"/barboursville-wv-house-cleaning/#lavalette\">Lavalette</a>, Flatwoods, Russell, Catlettsburg, Grayson, Raceland, Greenup, South Point, Coal Grove, Chesapeake, Proctorville, and Burlington.</li>",
     ]
     about = f'<p class="footer-about">{linkify(ABOUT)}</p>' if include_about else ""
     return f"""
@@ -1042,9 +1047,9 @@ def service_pages() -> list[dict]:
         <h2>What we don’t do on a deep clean</h2>
         <p>We don’t shampoo carpets, wash exterior windows, or pressure-wash siding or decks. Those aren’t services we sell. If that’s the main job, you’ll want a specialist. If the job is the inside of the house — kitchens, bathrooms, floors, dust, and the built-up corners — that’s us.</p>
         <h2>Where we do this work</h2>
-        <p>Kenova and Ceredo are home base. Huntington is the largest city on the schedule. We also deep clean in Ashland, Ironton, and the other towns within about 25 miles of Kenova, including Barboursville, Wayne, Catlettsburg, Russell, Flatwoods, and South Point. Send the ZIP if you live on the edge of that circle.</p>
+        <p>Kenova and Ceredo are home base. Huntington is the largest city on the schedule. We also deep clean in Ashland, Ironton, and the other towns within about 25 miles of Kenova, including <a href="/barboursville-wv-house-cleaning/">Barboursville</a>, Wayne, Catlettsburg, Russell, Flatwoods, and South Point. Send the ZIP if you live on the edge of that circle.</p>
         {how_we_work()}
-        {related([("/house-cleaning/", "Recurring house cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
+        {related([("/house-cleaning/", "Recurring house cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/barboursville-wv-house-cleaning/", "Barboursville")])}
         """,
     })
 
@@ -1161,20 +1166,30 @@ def service_pages() -> list[dict]:
 
     pages.append(office_huntington_page())
 
+    holiday_faqs = [
+        ("Can you clean my house before Thanksgiving or Christmas?", "Yes. We get the kitchen, bathrooms, guest rooms, and living areas ready before company arrives, and we can come back after. The weeks of Thanksgiving and Christmas are our busiest, so book early. Call or text (304) 710-5430 to check dates. Pricing varies by home, so you'll get a quote, not a package price."),
+        ("How far ahead should I book a cleaning before Thanksgiving?", "As early as you can. Thanksgiving week is one of our busiest, and we don't hold dates on the website or promise a day until we've talked. Call or text (304) 710-5430 and ask what's still open. If we're booked, we'll say so. The earlier you ask, the more dates there are to choose from."),
+        ("Do you clean on Thanksgiving Day, Christmas Day, or New Year's Day?", "Usually not on the holiday itself. We prefer not to schedule cleanings on Thanksgiving Day, Christmas Day, or New Year's Day. We do take holiday and event cleanings in the days around them, before guests arrive or after they leave. Call or text (304) 710-5430 to ask what's still open."),
+        ("Should I book a deep clean or a standard clean before the holidays?", "If the house is already in good shape, a standard one-time cleaning finishes the main rooms before guests arrive. If the year has piled up, with dusty baseboards and fans or a bathroom that needs a real scrub, book a deep clean instead. Not sure? Choose \"Help me choose\" on the quote form and we'll recommend one."),
+        ("What does a guest-ready clean include?", "A guest-ready clean covers the kitchen, bathrooms, guest rooms, and living areas, the rooms company actually uses. It doesn't include decorating, cooking, or watching the house. If the home has fallen behind, a deep clean is the better fit. Tell us which rooms matter most and how many people are staying when you request a quote."),
+        ("Do you clean the oven or fridge before Thanksgiving?", "Only if you ask. Cleaning inside the oven or fridge isn't part of a standard holiday clean, but we can add it as an extra. Mention it on the quote form or when you call or text (304) 710-5430, so we can plan the time and include it in your quote."),
+        ("Can you clean after Thanksgiving dinner or after guests leave?", "Yes. After the meal, a visit can reset the kitchen and bathrooms once everyone has gone. You can book it on its own or pair it with a clean before guests arrive. Call or text (304) 710-5430 with the dates you have in mind, and we'll tell you honestly what's open that week."),
+        ("Can you change the sheets in the guest room?", "Yes, with our laundry and linen add-on. We can strip and remake beds, or wash, dry, and fold a load, as part of a house cleaning visit. It isn't a drop-off laundry service. Mention the guest beds in your quote notes or when you call, and we'll include it in your quote."),
+        ("How much does holiday cleaning cost?", "We don't publish a holiday package price, because every home and guest list is different. Your quote depends on the home's size, bathrooms, condition, and whether you want a standard or deep clean, before or after guests. Request a free quote on our form or call or text (304) 710-5430. There's no contract for a one-time clean."),
+        ("Do you do holiday cleaning outside Kenova?", "Yes. We're based in Kenova, WV, and do holiday and guest-ready cleaning within about 25 miles, including Huntington, Ceredo, Barboursville, and Milton in West Virginia; Ashland and Russell in Kentucky; and Ironton and South Point in Ohio. Put your ZIP code on the quote form if you're not sure you're inside the area."),
+        ACCESS,
+        ("Are you pet friendly when we have family visiting?", "Yes. We're pet friendly and work around dogs and cats, so you don't need to board them for us to come. Tell us how many pets you have, whether they're crate-shy, and where the hair collects. Before guests arrive, we'll spend extra time on pet hair, nose prints on glass, and dusty corners."),
+    ]
     pages.append({
         "path": "/holiday-cleaning/",
-        "title": "Holiday House Cleaning in the Tri-State | Country Roads",
-        "description": "Holiday and guest-ready cleaning in Kenova, Huntington, and the Tri-State. Kitchens, bathrooms, and guest rooms before company arrives. Call (304) 710-5430.",
+        "title": "Holiday & Thanksgiving House Cleaning | Country Roads",
+        "description": "Cleaning before Thanksgiving or Christmas in Kenova, Huntington, Ashland & Ironton. Kitchens, baths, guest rooms. Book early: call or text (304) 710-5430.",
         "h1": "Holiday and guest-ready cleaning before company arrives",
         "eyebrow": "Thanksgiving, Christmas, and houseguests",
         "lede": "We get the kitchen, bathrooms, guest rooms, and living areas ready before family arrives, and we can come back after. The week matters, so call to check dates.",
         "crumbs": [("Holiday cleaning", "/holiday-cleaning/")],
         "service_ids": ["holiday"],
-        "faqs": [
-            ("Can you clean before Thanksgiving or Christmas?", "Yes. We get the kitchen, bathrooms, guest rooms, and living areas ready before company arrives, and we can come back after. Holiday availability depends on the week, so call or text (304) 710-5430 to check dates. Pricing varies by home."),
-            ("What does a guest-ready clean include?", "Kitchen, bathrooms, guest rooms, and living areas. If the house has fallen behind, a deep clean is the better fit. Tell us which rooms matter most when you request a quote."),
-            ACCESS,
-        ],
+        "faqs": holiday_faqs,
         "body": f"""
         <h2>Getting the house ready for company</h2>
         @@holiday@@
@@ -1183,8 +1198,29 @@ def service_pages() -> list[dict]:
         <h2>Dates fill up, and we won’t guess</h2>
         <p>The week of Thanksgiving and the week of Christmas are the busy ones. We don’t hold dates on the website, and we don’t promise a specific day until we’ve talked. Call or text <a href="{TEL}">{PHONE}</a> and ask what’s still open. If we’re booked, we’ll say so. After the meal, the same visit can be a reset of the kitchen and bathrooms once everyone has gone.</p>
         <p>Tell us how many people are staying, which rooms they’ll use, and whether you want us before they arrive, after they leave, or both. Pricing depends on the home, so it comes back as a quote, not a package price.</p>
+        <h2>Cleaning before Thanksgiving in the Tri-State</h2>
+        <p>Country Roads Cleaning Solutions cleans homes before Thanksgiving across Kenova, Huntington, Ashland, Ironton, and nearby Tri-State towns. We focus on the kitchen, bathrooms, guest rooms, and living areas your family will actually use. Thanksgiving week is one of our busiest, so book early. Call or text <a href="{TEL}">{PHONE}</a> to check which dates are still open.</p>
+        <p>Tell us the day guests arrive and which rooms they’ll use. Cleaning inside the oven or fridge isn’t part of the standard holiday clean, but we can add it as an extra if you ask when you call.</p>
+        <h2>Cleaning before Christmas and New Year’s guests</h2>
+        <p>Yes, we also clean before Christmas and New Year’s visitors. The week of Christmas fills up like Thanksgiving week, so it helps to ask early. Tell us how many people are staying, which rooms they’ll use, and whether you want us before they arrive, after they leave, or both.</p>
+        <p>We prefer not to schedule cleanings on Thanksgiving Day, Christmas Day, or New Year’s Day themselves. We’re glad to take holiday and event cleanings in the days around them, so ask about the dates before and after.</p>
+        <h2>Before the guests, after the meal, or both</h2>
+        <p>You can book a guest-ready clean before company arrives, a reset after everyone leaves, or both. Before the visit, we put the kitchen, bathrooms, guest rooms, and living areas first. After the meal, the same kind of visit resets the kitchen and bathrooms. Tell us which you want when you <a href="/#quote">request a quote</a>.</p>
+        <p>Hosting guests in a rental instead of your own home? The <a href="/airbnb-turnover-cleaning/">rental turnover</a> page covers resets between check-ins.</p>
+        <h2>What we put first in a holiday clean</h2>
+        <p>Guests notice the rooms they use. A guest-ready clean puts the kitchen, the shared bathroom, guest rooms, and living areas first. If the house has fallen behind, book a <a href="/deep-cleaning/">deep clean before the holidays</a> so baseboards, the dusty fan, and built-up bathroom grime get attention too. Tell us which rooms matter most.</p>
+        <h3>Holiday cleaning checklist: what we cover</h3>
+        <ul>
+          <li>Kitchen: counters, surfaces, and the everyday buildup.</li>
+          <li>Bathrooms, especially the one everyone shares.</li>
+          <li>Guest rooms. Add a bed linen change with the <a href="/house-cleaning/#laundry">laundry and linen add-on</a> if you want one.</li>
+          <li>Living areas: dusting and floors, vacuumed and mopped.</li>
+          <li>A deep clean adds baseboards, ceiling fans, built-up kitchen grease and bathroom soap scum, and pet hair.</li>
+          <li>Extras, only if you ask: inside the oven and inside the fridge.</li>
+          <li>Not included: decorating, cooking, house-sitting, carpet shampooing, exterior windows, or pressure washing.</li>
+        </ul>
         {how_we_work()}
-        {related([("/deep-cleaning/", "Deep cleaning"), ("/house-cleaning/", "One-time house cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland")])}
+        {related([("/deep-cleaning/", "Deep cleaning"), ("/house-cleaning/", "One-time house cleaning"), ("/airbnb-turnover-cleaning/", "Rental turnover"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/barboursville-wv-house-cleaning/", "Barboursville"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     })
     return pages
@@ -1215,14 +1251,62 @@ def city_pages() -> list[dict]:
         <p>{esc(huntington_sentence)} We also clean in the neighborhoods people actually name when they call: downtown, the area around Marshall University, Ritter Park and the South Side, the West End, Highlawn, and Guyandotte.</p>
         <h2>Getting around Huntington</h2>
         <p>Downtown is the Pullman Square and Heritage Station end of the city, close to campus. South of the tracks, Ritter Park is the long green space the South Side is built around. The West End, also called West Huntington, runs toward the river and Route 60 in the direction of Ceredo and Kenova. Highlawn and Guyandotte are on the east side, toward Barboursville.</p>
-        <p>If you’re just outside Huntington in Barboursville, including the area around the Huntington Mall and Pea Ridge, you’re still on our list. Same for Lavalette and Milton. You don’t need a Huntington street address for us to come. You need a ZIP we can reach from Kenova, which is about a 25-mile radius.</p>
+        <p>If you’re just outside Huntington in <a href="/barboursville-wv-house-cleaning/">Barboursville</a>, including the area around the Huntington Mall and Pea Ridge, you’re still on our list. Same for <a href="/barboursville-wv-house-cleaning/#lavalette">Lavalette</a> and <a href="/barboursville-wv-house-cleaning/#milton">Milton</a>. You don’t need a Huntington street address for us to come. You need a ZIP we can reach from Kenova, which is about a 25-mile radius.</p>
         <h2>What Huntington customers usually book</h2>
         <p><a href="/house-cleaning/">Standard and recurring cleaning</a> is the ongoing visit: kitchens, bathrooms, dusting, and floors, weekly, every two weeks, or monthly. A <a href="/deep-cleaning/">deep clean</a> is the right first visit when an older house has buildup in the kitchen and bathroom. <a href="/move-in-move-out-cleaning/">Move-in and move-out cleaning</a> is common around campus and in rentals downtown, between leases. Apartments and condos are quoted on the <a href="/apartment-condo-cleaning/">apartment page</a>, and short-term rentals on the <a href="/airbnb-turnover-cleaning/">turnover page</a>.</p>
         <p><a href="/office-cleaning-huntington-wv/">Small offices and storefronts downtown</a> or along the main roads can use <a href="/commercial-cleaning/">commercial cleaning</a>. Describe the space. We don’t assume every business wants the same checklist.</p>
         <h2>Practical notes for a Huntington home</h2>
         <p>A lot of the houses south of downtown and in Guyandotte are older, with trim, stairs, and bathrooms that take longer than a new build of the same square footage. Tell us the age and the condition in the notes if you know it. That keeps the quote closer to the real job. We bring supplies, we’re pet friendly, and we’re licensed and insured.</p>
         <p>We’re women-owned and based in Kenova, not in Morgantown. Phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call or text <a href="{TEL}">{PHONE}</a>.</p>
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/holiday-cleaning/", "Holiday cleaning"), ("/barboursville-wv-house-cleaning/", "Barboursville"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
+        """,
+    })
+
+    barboursville_sentence = "House cleaning for homes in Barboursville, Milton, and Lavalette, West Virginia, by Country Roads Cleaning Solutions in Kenova."
+    pages.append({
+        "path": "/barboursville-wv-house-cleaning/",
+        "title": "House Cleaning in Barboursville, WV | Country Roads",
+        "description": "House cleaning in Barboursville, Milton & Lavalette, WV from a women-owned Kenova team. Standard, deep & move-out cleaning. Call (304) 710-5430.",
+        "h1": "House cleaning in Barboursville, West Virginia",
+        "eyebrow": "Barboursville · Milton · Lavalette",
+        "lede": "Yes, we clean in Barboursville, including the area around the Huntington Mall and Pea Ridge, and in nearby Milton and Lavalette. We come from our base in Kenova. Call or text, or send your ZIP code on the quote form.",
+        "crumbs": [("Barboursville, WV", "/barboursville-wv-house-cleaning/")],
+        "service_ids": [],
+        "service_sentence": barboursville_sentence,
+        "service_name": "House cleaning in Barboursville, West Virginia",
+        "area_served": [
+            {"@type": "City", "name": "Barboursville", "containedInPlace": {"@type": "State", "name": "West Virginia"}},
+            {"@type": "City", "name": "Milton", "containedInPlace": {"@type": "State", "name": "West Virginia"}},
+            {"@type": "City", "name": "Lavalette", "containedInPlace": {"@type": "State", "name": "West Virginia"}},
+        ],
+        "faqs": [
+            ("Do you offer house cleaning in Barboursville, WV?", "Yes. Country Roads Cleaning Solutions cleans homes in Barboursville, WV, including the area around the Huntington Mall and Pea Ridge, from our base in Kenova. We offer standard and recurring cleaning, deep cleaning, and move-in/move-out cleaning. Call or text (304) 710-5430, or send your ZIP code on the quote form."),
+            ("Do you clean in Milton, WV?", "Yes. Milton is on our service list, inside our roughly 25-mile drive from Kenova. We clean houses and apartments there the same way we do in Barboursville and Huntington. Send your ZIP code on the quote form, or call or text (304) 710-5430 to confirm."),
+            ("Do you clean in Lavalette, WV?", "Yes. Lavalette is on our service list, along with Wayne and the rest of the area within about 25 miles of Kenova. You don't need a Huntington address for us to come. You need a ZIP we can reach. Put yours on the quote form or call (304) 710-5430."),
+            ("How much does house cleaning cost in Barboursville?", "We don't publish prices, because homes of the same size can be very different jobs. Your free quote depends on bedrooms, bathrooms, square footage, the home's condition, the type of cleaning, and how often you want help. Fill out the quote form with those details or call or text (304) 710-5430, and we'll send a recommendation and quote."),
+            ("Do I need to be home, and do you bring supplies?", "You don't have to be home. We arrange keys or other access with you directly, so please don't put a door code in the website form. We bring our own supplies and equipment. If you want a specific product used, tell us. We're licensed, insured, and pet friendly, and we accept all forms of payment."),
+            ("Are you the same company as Country Roads Cleaning in Morgantown?", "No. Country Roads Cleaning Solutions is the Kenova, WV company serving Barboursville, Huntington, and the Tri-State. A different business with a similar name operates in Morgantown, and we're not connected to it. If you want indoor house cleaning in Barboursville, Milton, or Lavalette, you're in the right place."),
+        ],
+        "body": f"""
+        <p>{esc(barboursville_sentence)} Standard and recurring cleaning, deep cleaning, and move-in and move-out cleaning are all available here, one time or on a schedule.</p>
+        <h2>Where we clean around Barboursville</h2>
+        <p>Barboursville is on our list, including the homes around the Huntington Mall and Pea Ridge. Highlawn and Guyandotte sit on Huntington’s east side, toward Barboursville, so east-end Huntington and Barboursville are part of the same drive for us. You don’t need a Huntington address. You need a ZIP we can reach within about 25 miles of Kenova.</p>
+        <p>Not sure whether your street counts? Put the ZIP code on the <a href="/#quote">quote form</a> or call or text <a href="{TEL}">{PHONE}</a>. If the drive doesn’t work, we’ll tell you instead of guessing. If you live closer in, see <a href="/huntington-wv-house-cleaning/">house cleaning in Huntington</a>.</p>
+        <h2 id="milton">House cleaning in Milton</h2>
+        <p>Milton is on our service list too. It sits east of Barboursville and is still inside the area we cover from Kenova. We clean houses and apartments there the same way we do in Barboursville and Huntington: kitchens, bathrooms, dusting, and floors, once or on a schedule. Send your ZIP code on the quote form, or call or text to confirm before you book.</p>
+        <h2 id="lavalette">House cleaning in Lavalette</h2>
+        <p>Lavalette is on the list as well. Barboursville and Milton are in Cabell County, while Lavalette is in Wayne County, the same county as <a href="/kenova-ceredo-house-cleaning/">our Kenova home base</a>. County lines don’t change anything for us. If the house is within about 25 miles of Kenova, we can quote it. Wayne is on the same list if you’re farther south.</p>
+        <h2>What Barboursville homeowners can book</h2>
+        <p><a href="/house-cleaning/">Standard and recurring house cleaning</a>, one time or weekly, every two weeks, or monthly; a <a href="/deep-cleaning/">deep clean</a>; <a href="/move-in-move-out-cleaning/">move-in and move-out cleaning</a>; <a href="/apartment-condo-cleaning/">apartment and condo cleaning</a>; <a href="/holiday-cleaning/">holiday and guest-ready cleaning</a>; <a href="/airbnb-turnover-cleaning/">rental and Airbnb turnovers</a>; and a <a href="/house-cleaning/#laundry">laundry and linen add-on</a>. We also clean <a href="/commercial-cleaning/">offices and small businesses</a>. If you’re not sure which fits, choose “Help me choose” on the quote form.</p>
+        <p>We’re pet friendly, so you don’t need to board the dog or cat. We don’t do carpet shampooing, exterior windows, or pressure washing. If that’s the job, we’re not the right call, and we’d rather say so up front.</p>
+        <h2>Deep clean or regular cleaning?</h2>
+        <p>If the house has fallen behind, start with a deep clean. It handles built-up kitchen grease, bathroom soap scum, baseboards, and pet hair. After that, a standard recurring visit keeps things under control. If you’re mostly keeping up, standard cleaning weekly, every two weeks, or monthly is the usual fit.</p>
+        <h2>How pricing works</h2>
+        <p>There’s no rate card on this site. Two houses with the same square footage can be very different jobs, so the quote comes from what you tell us: bedrooms, bathrooms, size, condition, the type of cleaning, and how often you want help. Supplies come with the visit, and a one-time clean has no contract. Fill out the quote form and we’ll send a recommendation with the quote.</p>
+        {how_we_work()}
+        <h2>The Kenova company, not the Morgantown one</h2>
+        <p>Country Roads Cleaning Solutions is the women-owned company based in Kenova, WV. A different business uses a similar name in Morgantown. That is not us. We don’t have a Barboursville office. We drive over from Kenova and come to the house.</p>
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/holiday-cleaning/", "Holiday cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo")])}
         """,
     })
 
@@ -1250,8 +1334,8 @@ def city_pages() -> list[dict]:
         <p>Westwood is its own city next to Ashland. It isn’t on our published 20-town list. If you’re there, send the ZIP anyway and we’ll tell you whether the drive works. We’d rather say no than guess.</p>
         <h2>Services that fit Ashland homes</h2>
         <p>River-town houses often need more time in the kitchen and on the floors than a newer house of the same size. A <a href="/deep-cleaning/">deep clean</a> is a good first visit. <a href="/house-cleaning/">Recurring cleaning</a> keeps it that way. <a href="/move-in-move-out-cleaning/">Move-out cleaning</a> is the visit to book when you’re handing a rental back or selling. Offices and storefronts on Winchester Avenue can use <a href="/commercial-cleaning/">commercial cleaning</a>.</p>
-        <p>We don’t charge a different rate because the house is in Kentucky. The quote depends on size and condition. We’re licensed and insured, we bring supplies, and we accept all forms of payment. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM.</p>
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/commercial-cleaning/", "Office cleaning"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
+        <p>Ashland and the nearby Kentucky towns are inside our service area. The quote depends on size and condition. We’re licensed and insured, we bring supplies, and we accept all forms of payment. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM.</p>
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/commercial-cleaning/", "Office cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
         """,
     })
 
@@ -1278,8 +1362,8 @@ def city_pages() -> list[dict]:
         <p>Coal Grove is just up against Ironton. South Point and Burlington are close to Kenova, across the river from our base. Chesapeake sits across from Huntington, and Proctorville is farther up the river. All of them are on the service list. If your house is in one of those towns, you’re not “out of the way” for a Kenova cleaner. You’re in the area we already drive.</p>
         <h2>Older houses, honest quotes</h2>
         <p>A lot of homes near downtown Ironton were built when the railroad and the mills were the reason the town was here. Smaller rooms, original trim, and bathrooms that need a real scrub are normal. Tell us that on the quote. A <a href="/deep-cleaning/">deep clean</a> is usually the right first visit. Afterward, <a href="/house-cleaning/">weekly, every-two-weeks, or monthly cleaning</a> keeps the kitchen and bathrooms from sliding.</p>
-        <p>Move-out cleans are common when a house sells or a tenant leaves. Use the <a href="/move-in-move-out-cleaning/">move-in and move-out page</a> and include the date. Small offices can be quoted through <a href="/commercial-cleaning/">commercial cleaning</a>. We don’t add a surcharge for crossing into Ohio. Call or text <a href="{TEL}">{PHONE}</a> during Monday–Friday, 9:00 AM–5:00 PM.</p>
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-out cleaning"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
+        <p>Move-out cleans are common when a house sells or a tenant leaves. Use the <a href="/move-in-move-out-cleaning/">move-in and move-out page</a> and include the date. Small offices can be quoted through <a href="/commercial-cleaning/">commercial cleaning</a>. Ironton and the nearby Ohio towns are inside our service area. Call or text <a href="{TEL}">{PHONE}</a> during Monday–Friday, 9:00 AM–5:00 PM.</p>
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-out cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
         """,
     })
 
@@ -1312,7 +1396,7 @@ def city_pages() -> list[dict]:
         <p><a href="/house-cleaning/">Standard cleaning</a> covers kitchens, bathrooms, dusting, and floors, once or on a weekly, every-two-weeks, or monthly visit. A <a href="/deep-cleaning/">deep clean</a> is the first visit when the house has fallen behind. <a href="/move-in-move-out-cleaning/">Move-in and move-out cleaning</a> is for a sale or a rental handoff. Small offices and storefronts in either town can be quoted as <a href="/commercial-cleaning/">commercial cleaning</a>.</p>
         <p>We don’t publish a street address. Customers don’t visit an office. We come to the house, and we arrange keys with you by phone. Please don’t send a door code through the form. We’re women-owned, licensed, and insured, we bring supplies, and we accept all forms of payment. We opened in September 2026.</p>
         <p>Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM, or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/commercial-cleaning/", "Commercial cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/commercial-cleaning/", "Commercial cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/barboursville-wv-house-cleaning/", "Barboursville"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     })
     return pages
