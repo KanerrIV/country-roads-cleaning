@@ -195,6 +195,7 @@ NAV = [
     ("/airbnb-turnover-cleaning/", "Airbnb turnover"),
     ("/apartment-condo-cleaning/", "Apartments"),
     ("/commercial-cleaning/", "Commercial"),
+    ("/office-cleaning-huntington-wv/", "Huntington offices"),
     ("/holiday-cleaning/", "Holiday"),
     ("/huntington-wv-house-cleaning/", "Huntington"),
     ("/ashland-ky-house-cleaning/", "Ashland"),
@@ -259,11 +260,14 @@ def related(links: list[tuple[str, str]]) -> str:
     return f'<h2>Related pages</h2><div class="related">{items}</div>'
 
 
+FAQ_CHEVRON = '<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>'
+
+
 def faq_html(faqs: list[tuple[str, str]], heading: str) -> str:
     items = []
     for question, answer in faqs:
         items.append(
-            f'<div class="faq-item"><h3>{esc(question)}</h3><p>{linkify(answer)}</p></div>'
+            f'<details class="faq-item"><summary><h3>{esc(question)}</h3>{FAQ_CHEVRON}</summary><p>{linkify(answer)}</p></details>'
         )
     return (
         f'<section class="faq-section" id="faq"><div class="wrap prose"><h2>{esc(heading)}</h2>'
@@ -414,7 +418,7 @@ def graph_for(page: dict) -> dict:
             "@type": "Service",
             "@id": canonical + "#local-service",
             "name": page["service_name"],
-            "serviceType": "House cleaning",
+            "serviceType": page.get("service_type", "House cleaning"),
             "description": page["service_sentence"],
             "url": canonical,
             "provider": {"@id": BUSINESS_ID},
@@ -517,6 +521,7 @@ def footer(include_about: bool) -> str:
         '<li><a href="/airbnb-turnover-cleaning/">Airbnb and rental turnover</a></li>',
         '<li><a href="/apartment-condo-cleaning/">Apartment and condo cleaning</a></li>',
         '<li><a href="/commercial-cleaning/">Commercial and office cleaning</a></li>',
+        '<li><a href="/office-cleaning-huntington-wv/">Office cleaning in Huntington</a></li>',
         '<li><a href="/holiday-cleaning/">Holiday and guest-ready cleaning</a></li>',
         '<li><a href="/house-cleaning/#laundry">Laundry and linen add-on</a></li>',
     ]
@@ -893,6 +898,57 @@ OFFICES = FAQ_HOME[7]
 PAYMENTS = FAQ_HOME[8]
 
 
+def office_huntington_page() -> dict:
+    """Huntington-only office page. /commercial-cleaning/ stays the Tri-State hub."""
+    sentence = "Country Roads Cleaning Solutions cleans offices, storefronts, and small businesses in Huntington, WV, from our base in nearby Kenova."
+    lede = (
+        f"{esc(sentence)} A typical visit covers restrooms, the break room, floors, dusting, and trash on a schedule "
+        f"built around your hours. We’re women-owned, licensed, and insured. Call <a href=\"{TEL}\">{PHONE}</a> for a quote."
+    )
+    faqs = [
+        ("How often should a small office be cleaned?", "It depends on how many people use the space and how hard the restrooms and break room get used. A busy storefront needs more frequent visits than a quiet office. Tell us your headcount, foot traffic, and when the space is empty, and we'll recommend a schedule that keeps it presentable without paying for visits you don't need."),
+        ("How much does office cleaning cost in Huntington?", "We don't publish a rate card, because a small office and a busy storefront are different jobs. The quote depends on the size of the space, the number of restrooms, how often you want visits, and what needs attention. Call (304) 710-5430 or use the quote form with \"Not a home (office or other)\" selected."),
+        ("Can you clean before or after business hours?", "Our phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean, and we'll confirm a schedule that works around your customers and staff. We don't promise nights or weekends up front, but ask and we'll tell you honestly whether we can."),
+        ("What kinds of businesses do you clean?", "We clean offices, storefronts, and other small businesses. We don't take on hospitals, factories, or whole school buildings. If your space has something unusual, like a showroom, a back office, or a treatment room, describe it on the quote form or call (304) 710-5430, and we'll tell you whether it fits."),
+        ("Do you only clean in Huntington?", "No. Huntington is the largest city we serve, but we're based in Kenova and cover businesses within about 25 miles, including Ceredo, Barboursville, Ashland, and Ironton. An office near Pullman Square in Huntington and a storefront on Winchester Avenue in Ashland are both ordinary drives for us. Send your ZIP code if you're near the edge."),
+        ("Are you insured, and do you bring supplies?", "Yes. Country Roads Cleaning Solutions is licensed and insured, and we bring our own supplies and equipment. If your building requires a specific product, tell us and we'll use it. We're women-owned and based in Kenova. Keys or alarm access are arranged by phone, so please don't send door codes through the website form."),
+    ]
+    return {
+        "path": "/office-cleaning-huntington-wv/",
+        "title": "Office Cleaning in Huntington, WV | Country Roads",
+        "description": "Office and storefront cleaning in Huntington, WV from a Kenova team. Restrooms, break rooms, floors, dusting, trash. Call (304) 710-5430 for a quote.",
+        "h1": "Office and small-business cleaning in Huntington, West Virginia",
+        "eyebrow": "Huntington · offices and storefronts",
+        "lede": lede,
+        "crumbs": [("Commercial cleaning", "/commercial-cleaning/"), ("Huntington, WV", "/office-cleaning-huntington-wv/")],
+        "service_ids": [],
+        "service_sentence": sentence,
+        "service_name": "Office cleaning in Huntington, West Virginia",
+        "service_type": "Office cleaning",
+        "area_served": {"@type": "City", "name": "Huntington", "containedInPlace": {"@type": "State", "name": "West Virginia"}},
+        "faqs": faqs,
+        "body": f"""
+        <h2>What does office cleaning include?</h2>
+        <p>A typical office visit covers restrooms, the break room, floors, dusting, and emptying trash. We bring our own supplies unless your building specifies a product. If you have something beyond that, like a showroom, a back office, or a treatment room, describe it when you ask for a quote and we’ll tell you honestly whether it fits.</p>
+        <ul>
+          <li>Restrooms</li>
+          <li>The break room</li>
+          <li>Floors</li>
+          <li>Dusting</li>
+          <li>Emptying trash</li>
+        </ul>
+        <p>This page is about Huntington. For Kenova, Ashland, Ironton, and the other river towns, see <a href="/commercial-cleaning/">commercial cleaning across the Tri-State</a>. If you also want help at home, we do <a href="/huntington-wv-house-cleaning/">house cleaning in Huntington</a> too.</p>
+        <h2>Which parts of Huntington do you cover?</h2>
+        <p>We clean offices and storefronts across Huntington: downtown around Pullman Square, near Marshall University, in the West End toward Ceredo and Kenova, and on the east side in Highlawn and Guyandotte. Barboursville, including the area around the Huntington Mall, is on the same schedule, so you don’t need a Huntington street address to ask for a quote.</p>
+        <p>Huntington sits well inside the area we cover from Kenova. A business in <a href="/ashland-ky-house-cleaning/">Ashland</a> or <a href="/ironton-oh-house-cleaning/">Ironton</a> works the same way. If you’re not sure the drive works, put your ZIP code on the quote form and we’ll confirm.</p>
+        <h2>What should I tell you when I ask for a quote?</h2>
+        <p>Tell us what kind of business it is, roughly how big the space is, how many restrooms it has, and when it’s empty enough to clean. Mention how often you’d like visits and anything unusual, like a showroom floor or a back office. On the quote form, choose “Not a home (office or other)” for bedrooms and bathrooms.</p>
+        <p>For the cleaning type, pick “Commercial or office cleaning.” Please don’t send door codes, alarm codes, or key details through the form. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM, and we’ll arrange access with you by phone.</p>
+        {related([("/commercial-cleaning/", "Commercial cleaning across the Tri-State"), ("/huntington-wv-house-cleaning/", "House cleaning in Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
+        """,
+    }
+
+
 def service_pages() -> list[dict]:
     common_related = [
         ("/house-cleaning/", "House cleaning"),
@@ -1078,9 +1134,11 @@ def service_pages() -> list[dict]:
         <p>Our phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean. We’ll confirm a schedule that works around customers and staff. We don’t promise nights or weekends on this page. If you need a time outside those phone hours, ask when you call and we’ll tell you honestly whether we can do it.</p>
         <p>We’re licensed and insured. We bring supplies unless you need a product your building already specifies. Payment can be whatever form you already use. There’s no rate card, because a two-room office and a busy storefront are different jobs.</p>
         {how_we_work()}
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo")])}
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo")])}
         """,
     })
+
+    pages.append(office_huntington_page())
 
     pages.append({
         "path": "/holiday-cleaning/",
@@ -1139,11 +1197,11 @@ def city_pages() -> list[dict]:
         <p>If you’re just outside Huntington in Barboursville, including the area around the Huntington Mall and Pea Ridge, you’re still on our list. Same for Lavalette and Milton. You don’t need a Huntington street address for us to come. You need a ZIP we can reach from Kenova, which is about a 25-mile radius.</p>
         <h2>What Huntington customers usually book</h2>
         <p><a href="/house-cleaning/">Standard and recurring cleaning</a> is the ongoing visit: kitchens, bathrooms, dusting, and floors, weekly, every two weeks, or monthly. A <a href="/deep-cleaning/">deep clean</a> is the right first visit when an older house has buildup in the kitchen and bathroom. <a href="/move-in-move-out-cleaning/">Move-in and move-out cleaning</a> is common around campus and in rentals downtown, between leases. Apartments and condos are quoted on the <a href="/apartment-condo-cleaning/">apartment page</a>, and short-term rentals on the <a href="/airbnb-turnover-cleaning/">turnover page</a>.</p>
-        <p>Small offices and storefronts downtown or along the main roads can use <a href="/commercial-cleaning/">commercial cleaning</a>. Describe the space. We don’t assume every business wants the same checklist.</p>
+        <p><a href="/office-cleaning-huntington-wv/">Small offices and storefronts downtown</a> or along the main roads can use <a href="/commercial-cleaning/">commercial cleaning</a>. Describe the space. We don’t assume every business wants the same checklist.</p>
         <h2>Practical notes for a Huntington home</h2>
         <p>A lot of the houses south of downtown and in Guyandotte are older, with trim, stairs, and bathrooms that take longer than a new build of the same square footage. Tell us the age and the condition in the notes if you know it. That keeps the quote closer to the real job. We bring supplies, we’re pet friendly, and we’re licensed and insured.</p>
         <p>We’re women-owned and based in Kenova, not in Morgantown. Phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call or text <a href="{TEL}">{PHONE}</a>.</p>
-        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
+        {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     })
 
