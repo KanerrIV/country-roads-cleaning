@@ -403,3 +403,5 @@ dialog::backdrop { background: rgba(15, 26, 19, 0.86); }
 .choice-group legend { font-size: 16px; font-weight: 700; line-height: 1.4; margin-bottom: 6px; color: var(--green); }
 .choice { display: inline-flex; align-items: center; gap: 6px; margin: 0 18px 6px 0; font-weight: 400; color: var(--ink); }
 .apply-form input[type=text], .apply-form input[type=tel], .apply-form input[type=email] { width: 100%; }
+.apply-form .choice input[type=radio] { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 0; flex: 0 0 auto; appearance: auto; -webkit-appearance: radio; border-radius: 50%; }
+.apply-form .choice { display: flex; margin: 0 0 8px; font-size: 16px; }
