@@ -1280,6 +1280,68 @@ def render_404() -> str:
     return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog())
 
 
+def render_apply() -> str:
+    page = {
+        "path": "/apply/",
+        "title": "Apply to Clean With Us | Country Roads Cleaning Solutions",
+        "description": "Apply to join Country Roads Cleaning Solutions, a women-owned cleaning company in Kenova, WV. Part-time and full-time cleaning work in the Tri-State.",
+        "noindex": True,
+    }
+    def radios(name: str, options: list[str]) -> str:
+        return "".join(
+            f'<label class="choice"><input type="radio" name="{esc(name)}" value="{esc(o)}" required> {esc(o)}</label>'
+            for o in options
+        )
+    def text(id_: str, label: str, name: str, kind: str = "text", extra: str = "", required: bool = True) -> str:
+        req = " required" if required else ""
+        return f'<div class="field"><label for="{id_}">{label}</label><input id="{id_}" type="{kind}" name="{esc(name)}"{extra}{req}></div>'
+    def area(id_: str, label: str, name: str, hint: str = "", required: bool = True) -> str:
+        req = " required" if required else ""
+        return f'<div class="field"><label for="{id_}">{label}</label><textarea id="{id_}" name="{esc(name)}" rows="3" maxlength="3000" placeholder="{esc(hint)}"{req}></textarea></div>'
+    def group(label: str, name: str, options: list[str]) -> str:
+        return f'<fieldset class="field choice-group"><legend>{label}</legend>{radios(name, options)}</fieldset>'
+    fields = "".join([
+        text("a-name", "Full name", "Full name", extra=' autocomplete="name" maxlength="100"'),
+        text("a-phone", "Phone number", "Phone", kind="tel", extra=' autocomplete="tel" maxlength="30"'),
+        text("a-email", "Email address", "email", kind="email", extra=' autocomplete="email" maxlength="254"'),
+        text("a-city", "What city and state do you live in?", "City and state", extra=' autocomplete="address-level2" maxlength="100" placeholder="e.g. Huntington, WV"'),
+        group("Are you looking for part-time or full-time work?", "Part-time or full-time", ["Part-time", "Full-time", "Open to either"]),
+        text("a-hours", "How many hours per week would you like to work?", "Hours per week wanted", extra=' maxlength="50"'),
+        group("Do you have reliable transportation to and from cleaning jobs?", "Reliable transportation", ["Yes", "No"]),
+        area("a-exp", "What cleaning experience do you have?", "Cleaning experience", "Briefly describe any house cleaning, commercial cleaning, housekeeping, or other relevant experience."),
+        area("a-job", "Briefly describe your current or most recent job and how long you worked there.", "Current or most recent job"),
+        group("Are you comfortable cleaning homes where pets are present?", "Comfortable with pets", ["Yes", "No"]),
+        text("a-start", "When would you be available to start?", "Available to start", extra=' maxlength="100"'),
+        area("a-why", "Why are you interested in working with Country Roads Cleaning Solutions?", "Why Country Roads"),
+        area("a-else", 'Is there anything else you’d like us to know? <span class="optional">(optional)</span>', "Anything else", required=False),
+    ])
+    main = f"""
+    <section class="page-hero">
+      <div class="wrap prose">
+        <p class="eyebrow">We’re hiring</p>
+        <h1>Apply to clean with Country Roads</h1>
+        <p class="lede">We’re a women-owned cleaning company in Kenova, WV, growing our team for homes and businesses across the Tri-State. Fill this out and we’ll be in touch.</p>
+      </div>
+    </section>
+    <section class="article"><div class="article-inner">
+      <div class="form-card apply-card">
+        <p class="form-status apply-thanks" id="apply-thanks" hidden>Thanks for applying! We got your application and will reach out soon.</p>
+        <form class="apply-form" id="apply-form" method="POST" action="https://formsubmit.co/{EMAIL}">
+          {fields}
+          <div class="honeypot" aria-hidden="true"><label for="a-website">Leave this field empty</label><input id="a-website" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="_subject" value="New job application | Country Roads Cleaning Solutions">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="{BASE}/apply/?sent=1">
+          <button class="button submit-button" type="submit">Submit my application {ARROW}</button>
+          <p class="form-footnote">We’ll use your details only to follow up about this application.</p>
+        </form>
+      </div>
+    </div></section>
+    <script>if(new URLSearchParams(location.search).has("sent")){{document.getElementById("apply-thanks").hidden=false;document.getElementById("apply-form").hidden=true;}}</script>
+    """
+    return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
+
+
 def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
@@ -1576,6 +1638,7 @@ def main() -> None:
     for page, markup in pages:
         write_text(page["file"], markup)
     write_text(ROOT / "404.html", not_found_html)
+    write_text(ROOT / "apply" / "index.html", render_apply())
     urls = [BASE + page["path"] for page, _markup in pages]
     sitemap = [
         '<?xml version="1.0" encoding="UTF-8"?>',
