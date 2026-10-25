@@ -861,6 +861,19 @@ def homepage_main() -> str:
       </div>
     </section>
     {quote_form(True)}
+    <section class="gallery-section" aria-label="Homes cleaned by Country Roads">
+      <div class="wrap">
+        <div class="gallery-heading">
+          <h2>A little less on your to-do list.</h2>
+          <span>Real homes cleaned by our team. Tap a photo to see it larger.</span>
+        </div>
+        <div class="photo-grid">{''.join(figures)}</div>
+        <div class="gallery-cta">
+          <a class="button" href="#quote">Get my cleaning quote {ARROW}</a>
+          <p>Find the right cleaning plan for your home.</p>
+        </div>
+      </div>
+    </section>
     <article class="article">
       <div class="article-inner">
         <div class="section-label">A little help with the house</div>
@@ -895,19 +908,6 @@ def homepage_main() -> str:
           <p>Hours are Monday through Friday, 9:00 AM to 5:00 PM. Closed Saturday and Sunday. Call or text <a href="{TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
         </div>
         {town_list()}
-      </div>
-    </section>
-    <section class="gallery-section" aria-label="Homes cleaned by Country Roads">
-      <div class="wrap">
-        <div class="gallery-heading">
-          <h2>A little less on your to-do list.</h2>
-          <span>Real homes cleaned by our team. Tap a photo to see it larger.</span>
-        </div>
-        <div class="photo-grid">{''.join(figures)}</div>
-        <div class="gallery-cta">
-          <a class="button" href="#quote">Get my cleaning quote {ARROW}</a>
-          <p>Find the right cleaning plan for your home.</p>
-        </div>
       </div>
     </section>
     {faq_html(FAQ_HOME, "Questions we hear before a first cleaning")}
