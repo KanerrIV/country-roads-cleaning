@@ -646,13 +646,17 @@ def home_carousel() -> str:
     pause_icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>'
     slides = []
     dots = []
+    # Overlay copy stays on the first photo only. Later slides are the picture alone.
+    first_note = '<div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>'
     for index, (name, size, alt, wide) in enumerate(photos):
         hidden = "" if index == 0 else " hidden"
         wide_class = " is-wide" if wide else ""
         current = ' aria-current="true"' if index == 0 else ""
+        overlay = first_note if index == 0 else ""
         slides.append(
             f'<div class="photo-carousel-slide{wide_class}" role="group" aria-roledescription="slide" aria-label="Photo {index + 1} of {total}"{hidden}>'
             + photo(name, [640, 960], size, alt, "(max-width: 760px) 92vw, 480px", lazy=index != 0)
+            + overlay
             + "</div>"
         )
         dots.append(
@@ -662,12 +666,10 @@ def home_carousel() -> str:
         <div class="photo-carousel hero-carousel" id="home-carousel" role="region" aria-roledescription="carousel" aria-label="Photos of homes cleaned by Country Roads" tabindex="0">
           <div class="hero-image-frame photo-carousel-frame">
             {''.join(slides)}
-            <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
             <div class="photo-carousel-bar">
               <button class="review-pause" id="home-carousel-pause" type="button" aria-label="Pause automatic photos">{pause_icon}</button>
               <button class="icon-button" id="home-carousel-prev" type="button" aria-label="Previous home photo">{prev_icon}</button>
               <div class="photo-dots" role="group" aria-label="Choose a photo">{''.join(dots)}</div>
-              <span class="review-count" id="home-carousel-count" aria-hidden="true">1 / {total}</span>
               <button class="icon-button" id="home-carousel-next" type="button" aria-label="Next home photo">{next_icon}</button>
             </div>
           </div>
@@ -915,7 +917,7 @@ def homepage_main() -> str:
           </div>
           <p class="cta-note">Tell us about your home. We’ll take it from there.</p>
         </div>
-        <figure class="hero-visual">
+        <figure class="hero-visual is-first-slide">
           {home_carousel()}
           <figcaption class="hero-caption"><span>A home cleaned by our team.</span><span>Real home. Real life.</span></figcaption>
         </figure>
@@ -1613,19 +1615,10 @@ def render_quote() -> str:
     steps_html, total = quote_quiz_steps()
     meter = f"{100 / total:.3f}"
     main = f"""
-    <section class="page-hero">
-      <div class="wrap prose">
-        <p class="eyebrow">Free quote</p>
-        <h1>Request a cleaning quote</h1>
-        <p class="lede">We’re a women-owned, licensed, and insured cleaning company based in Kenova, WV. We bring our own supplies and serve homes and businesses within about 25 miles. Tell us about your space and we’ll follow up with a personalized quote.</p>
-        <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 8:00 AM–5:00 PM.</p>
-      </div>
-    </section>
-    <section class="article" id="quote-quiz" aria-labelledby="quote-quiz-heading">
+    <section class="article quote-quiz-section" id="quote-quiz" aria-labelledby="quote-page-title">
       <div class="article-inner">
         <div class="form-card quote-quiz-card" id="q-card">
           <div id="q-form-wrap">
-            <p class="form-label" id="quote-quiz-heading">One question at a time</p>
             <form class="quote-quiz" id="q-form" method="POST" action="https://formsubmit.co/{EMAIL}" novalidate>
               <noscript>
                 <style>
@@ -1633,7 +1626,7 @@ def render_quote() -> str:
                   #q-next, #q-back {{ display: none !important; }}
                   #q-submit {{ display: inline-flex !important; }}
                 </style>
-                <p class="form-footnote">JavaScript walks through one question at a time. All of the questions are listed below so you can still send a request. Please include a phone number or an email address.</p>
+                <p class="form-footnote">All of the questions are listed below so you can still send a request. Please include a phone number or an email address.</p>
               </noscript>
               <p class="sr-only" id="q-progress" aria-live="polite">Question 1 of {total}</p>
               <div class="quiz-meter" id="q-meter-bar" role="progressbar" aria-valuemin="1" aria-valuemax="{total}" aria-valuenow="1" aria-valuetext="Question 1 of {total}">
@@ -1662,6 +1655,14 @@ def render_quote() -> str:
             <button type="button" id="q-new-request">Request another quote</button>
           </div>
         </div>
+      </div>
+    </section>
+    <section class="page-hero quote-page-intro">
+      <div class="wrap prose">
+        <p class="eyebrow">Free quote</p>
+        <h1 id="quote-page-title">Request a cleaning quote</h1>
+        <p class="lede">We’re a women-owned, licensed, and insured cleaning company based in Kenova, WV. We bring our own supplies and serve homes and businesses within about 25 miles. Tell us about your space and we’ll follow up with a personalized quote.</p>
+        <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 8:00 AM–5:00 PM.</p>
       </div>
     </section>
     """
@@ -2023,6 +2024,12 @@ def main() -> None:
         quote_errors.append("visible question count should not be on the quiz")
     if quote_html.count('class="quiz-step') != 9:
         quote_errors.append("quiz should have 9 questions")
+    if re.search(r"one question at a time", quote_html, re.I):
+        quote_errors.append('page still says "one question at a time"')
+    quiz_at = quote_html.find('id="quote-quiz"')
+    title_at = quote_html.find('id="quote-page-title"')
+    if quiz_at < 0 or title_at < 0 or quiz_at > title_at:
+        quote_errors.append("quiz should come before the request headline")
     if PHONE not in quote_html or "8:00 AM" not in quote_html:
         quote_errors.append("phone/hours not visible")
     home_markup = next(markup for page, markup in pages if page["path"] == "/")
@@ -2034,6 +2041,15 @@ def main() -> None:
         quote_errors.append("hero is missing the photo carousel")
     if "A home you can enjoy. A weekend you can keep." not in hero_markup:
         quote_errors.append("hero overlay copy missing")
+    carousel_at = hero_markup.find('id="home-carousel"')
+    carousel_end = hero_markup.find("</figure>", carousel_at)
+    carousel_markup = hero_markup[carousel_at:carousel_end] if carousel_at >= 0 and carousel_end > carousel_at else ""
+    if 'id="home-carousel-count"' in carousel_markup or re.search(r"\d+\s*/\s*\d+", carousel_markup):
+        quote_errors.append("hero carousel shows a slide counter")
+    if 'class="hero-visual is-first-slide"' not in hero_markup:
+        quote_errors.append("hero caption should start on the first slide")
+    if carousel_markup.count('class="photo-note"') != 1:
+        quote_errors.append("overlay caption should exist only on the first slide")
     if 'id="home-carousel"' in quote_markup or "carousel-" in quote_markup:
         quote_errors.append("quote section should not contain the carousel")
     for needle in (
@@ -2056,7 +2072,7 @@ def main() -> None:
             break
     if quote_errors:
         sys.exit("/quote/ validation failed: " + "; ".join(quote_errors))
-    print("Validated /quote/ (noindex, unlisted, no mobile bar, one question at a time, homepage carousel).")
+    print("Validated /quote/ (noindex, unlisted, no mobile bar, quiz before the intro, homepage carousel).")
     print("CNAME unchanged:", cname.strip())
 
 
