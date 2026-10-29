@@ -534,7 +534,7 @@
       </a>
       <div class="header-actions">
         <a class="header-phone" href="tel:+13047105430"><span class="sr-only">Call </span>(304) 710-5430</a>
-        <a class="button small" href="/#quote">Get a quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="button small" href="/quote/">Get a quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
       </div>
       <nav class="primary-nav" aria-label="Primary"><a href="/house-cleaning/">House cleaning</a><a href="/deep-cleaning/">Deep cleaning</a><a href="/move-in-move-out-cleaning/">Move-in / out</a><a href="/airbnb-turnover-cleaning/">Airbnb turnover</a><a href="/apartment-condo-cleaning/">Apartments</a><a href="/commercial-cleaning/">Commercial</a><a href="/office-cleaning-huntington-wv/">Huntington offices</a><a href="/holiday-cleaning/">Holiday</a><a href="/huntington-wv-house-cleaning/">Huntington</a><a href="/barboursville-wv-house-cleaning/">Barboursville</a><a href="/ashland-ky-house-cleaning/">Ashland</a><a href="/ironton-oh-house-cleaning/">Ironton</a><a href="/kenova-ceredo-house-cleaning/">Kenova &amp; Ceredo</a></nav>
     </div>
@@ -573,29 +573,41 @@
       <p class="review-cta"><a class="button small" href="https://g.page/r/CVa2G7SOeBFpEBM/review" target="_blank" rel="noopener noreferrer">Leave us a Google review <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></p>
     </div>
           <div class="hero-cta" id="hero-cta">
-            <a class="button" href="#quote">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="button" href="/quote/">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
             <a class="button ghost" href="tel:+13047105430">Call (304) 710-5430</a>
           </div>
           <p class="cta-note">Tell us about your home. We’ll take it from there.</p>
         </div>
         <figure class="hero-visual">
-          <div class="hero-image-frame">
-            <picture><source type="image/webp" srcset="/assets/photos/living-room-640.webp 640w, /assets/photos/living-room-960.webp 960w" sizes="(max-width: 760px) 92vw, 480px"><img src="/assets/photos/living-room-960.jpg" width="960" height="1280" alt="A freshly cleaned living room with warm hardwood floors, comfortable seating, and natural light" fetchpriority="high" decoding="async"></picture>
+          
+        <div class="photo-carousel hero-carousel" id="home-carousel" role="region" aria-roledescription="carousel" aria-label="Photos of homes cleaned by Country Roads" tabindex="0">
+          <div class="hero-image-frame photo-carousel-frame">
+            <div class="photo-carousel-slide is-wide" role="group" aria-roledescription="slide" aria-label="Photo 1 of 4"><picture><source type="image/webp" srcset="/assets/photos/carousel-bedroom-640.webp 640w, /assets/photos/carousel-bedroom-960.webp 960w" sizes="(max-width: 760px) 92vw, 480px"><img src="/assets/photos/carousel-bedroom-960.jpg" width="960" height="715" alt="A tidy bedroom with a wooden house-frame bed, hardwood floors, and gray curtains" fetchpriority="high" decoding="async"></picture></div><div class="photo-carousel-slide" role="group" aria-roledescription="slide" aria-label="Photo 2 of 4" hidden><picture><source type="image/webp" srcset="/assets/photos/carousel-bathroom-640.webp 640w, /assets/photos/carousel-bathroom-960.webp 960w" sizes="(max-width: 760px) 92vw, 480px"><img src="/assets/photos/carousel-bathroom-960.jpg" width="960" height="1280" alt="A freshly cleaned bathroom with a navy vanity, patterned tile floor, and a bright window" loading="lazy" decoding="async"></picture></div><div class="photo-carousel-slide" role="group" aria-roledescription="slide" aria-label="Photo 3 of 4" hidden><picture><source type="image/webp" srcset="/assets/photos/carousel-hallway-640.webp 640w, /assets/photos/carousel-hallway-960.webp 960w" sizes="(max-width: 760px) 92vw, 480px"><img src="/assets/photos/carousel-hallway-960.jpg" width="960" height="1286" alt="A clean hallway with a wood console table, lamp, framed art, and a potted plant" loading="lazy" decoding="async"></picture></div><div class="photo-carousel-slide" role="group" aria-roledescription="slide" aria-label="Photo 4 of 4" hidden><picture><source type="image/webp" srcset="/assets/photos/carousel-kitchen-640.webp 640w, /assets/photos/carousel-kitchen-960.webp 960w" sizes="(max-width: 760px) 92vw, 480px"><img src="/assets/photos/carousel-kitchen-960.jpg" width="960" height="1280" alt="A stainless gas range set into a white marble kitchen island" loading="lazy" decoding="async"></picture></div>
             <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
+            <div class="photo-carousel-bar">
+              <button class="review-pause" id="home-carousel-pause" type="button" aria-label="Pause automatic photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg></button>
+              <button class="icon-button" id="home-carousel-prev" type="button" aria-label="Previous home photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+              <div class="photo-dots" role="group" aria-label="Choose a photo"><button class="photo-dot" type="button" data-photo-index="0" aria-label="Show photo 1 of 4" aria-current="true"></button><button class="photo-dot" type="button" data-photo-index="1" aria-label="Show photo 2 of 4"></button><button class="photo-dot" type="button" data-photo-index="2" aria-label="Show photo 3 of 4"></button><button class="photo-dot" type="button" data-photo-index="3" aria-label="Show photo 4 of 4"></button></div>
+              <span class="review-count" id="home-carousel-count" aria-hidden="true">1 / 4</span>
+              <button class="icon-button" id="home-carousel-next" type="button" aria-label="Next home photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+            </div>
           </div>
+          <p class="sr-only" id="home-carousel-announcement" aria-live="polite"></p>
+        </div>
           <figcaption class="hero-caption"><span>A home cleaned by our team.</span><span>Real home. Real life.</span></figcaption>
         </figure>
       </div>
     </section>
     
     <section class="quote-section" id="quote" aria-labelledby="quote-heading">
-      <div class="wrap quote-grid">
+      <div class="wrap">
         <div class="quote-story">
           <p class="eyebrow">Kenova, West Virginia</p>
           <h2 id="quote-heading">Your next free Saturday could look different.</h2>
           <p>You already have plenty on your plate. Let us help with the cleaning.</p>
-          <p>Call or text <a href="tel:+13047105430">(304) 710-5430</a>, or tell us a little about the home or business. You don't have to figure out the whole plan before asking for a quote.</p>
+          <p>Call or text <a href="tel:+13047105430">(304) 710-5430</a> and tell us a little about the home or business. Then our team can get you a personalized quote.</p>
           <p>Monday–Friday, 8:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.</p>
+          <div class="quote-cta"><a class="button" href="/quote/">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
           
         <figure class="owner">
           <figcaption>
@@ -604,52 +616,6 @@
           </figcaption>
           <picture><source type="image/webp" srcset="/assets/photos/team-400.webp 400w" sizes="(max-width: 760px) 92vw, 460px"><img src="/assets/photos/team-400.jpg" width="400" height="513" alt="A member of the Country Roads Cleaning Solutions team" loading="lazy" decoding="async"></picture>
         </figure>
-        </div>
-        <div class="form-card">
-          <div id="form-content">
-            <div class="form-label">Let's take cleaning off your plate</div>
-            <h3>Get your personalized cleaning quote</h3>
-            <p class="form-intro">Answer a few easy questions so we can recommend the right cleaning. Specialty work is quoted by the job. We don't list prices on the site.</p>
-            <form class="quote-form" id="quote-form" method="POST" action="#quote" novalidate>
-              <p class="quote-progress" id="quote-progress" aria-live="polite">Step 1 of 2 · Your home</p>
-              <fieldset class="quote-step" id="home-step">
-                <legend>A few quick details about the space</legend>
-                <div class="field"><label for="zip">What's your ZIP code?</label><input id="zip" name="ZIP code" autocomplete="postal-code" inputmode="numeric" placeholder="e.g. 25530" pattern="[0-9]{5}(-[0-9]{4})?" maxlength="10" title="Enter a 5-digit ZIP code" required></div>
-                <div class="field"><label for="bedrooms">How many bedrooms?</label><select id="bedrooms" name="Bedrooms" required><option value="">Choose an option</option><option>0 / Studio</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option><option>Not a home (office or other)</option></select></div>
-                <div class="field"><label for="bathrooms">How many bathrooms?</label><select id="bathrooms" name="Bathrooms" required><option value="">Choose an option</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option><option>Not a home (office or other)</option></select></div>
-                <div class="field"><label for="square-feet">About how big is the home or space?</label><select id="square-feet" name="Approximate square footage" required><option value="">Choose an option</option><option>Under 1,000 sq ft</option><option>1,000–1,499 sq ft</option><option>1,500–1,999 sq ft</option><option>2,000–2,499 sq ft</option><option>2,500–2,999 sq ft</option><option>3,000–3,999 sq ft</option><option>4,000+ sq ft</option><option>I'm not sure</option></select></div>
-                <div class="field"><label for="service-type">What kind of cleaning do you need?</label><select id="service-type" name="Cleaning type" required><option value="">Choose an option</option><option>Standard cleaning</option><option>Deep cleaning</option><option>Move-in / move-out cleaning</option><option>Apartment or condo cleaning</option><option>Rental or Airbnb turnover</option><option>Holiday or guest-ready cleaning</option><option>Commercial or office cleaning</option><option>Help me choose</option></select></div>
-                <div class="field"><label for="frequency">How often would you like help?</label><select id="frequency" name="Preferred frequency" required><option value="">Choose an option</option><option>Just once</option><option>Every week</option><option>Every two weeks</option><option>Every month</option><option>I'm not sure yet</option></select></div>
-                <button class="button submit-button" id="quote-continue" type="button">Continue to my quote →</button>
-              </fieldset>
-              <fieldset class="quote-step" id="contact-step" hidden>
-                <legend>Where should we send your quote?</legend>
-                <div class="field"><label for="full-name">Your name</label><input id="full-name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100"></div>
-                <div class="form-row">
-                  <div class="field"><label for="phone">Phone <span class="optional">(or email)</span></label><input id="phone" type="tel" name="phone" autocomplete="tel" placeholder="Your phone number" maxlength="30" aria-describedby="contact-help"></div>
-                  <div class="field"><label for="email">Email <span class="optional">(or phone)</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="Your email address" maxlength="254" aria-describedby="contact-help"></div>
-                </div>
-                <p class="contact-help" id="contact-help">Add a phone number or email so we can get back to you.</p>
-                <div class="field"><label for="cleaning-note">Pets, laundry, or areas needing extra attention? <span class="optional">(optional)</span></label><textarea id="cleaning-note" name="Additional notes" placeholder="For example: two dogs, a linen change, or extra attention in the kitchen." rows="3" maxlength="3000"></textarea></div>
-                <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="_honey" tabindex="-1" autocomplete="off"></div>
-                <input type="hidden" name="_subject" value="New cleaning quote request | Country Roads Cleaning Solutions">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" id="form-next" value="">
-                <p class="form-status" id="form-status" role="alert" hidden></p>
-                <button class="button submit-button" id="form-submit" type="submit" disabled>Request My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
-                <noscript><p class="form-status">Please enable JavaScript to request a quote through this form, or call (304) 710-5430.</p></noscript>
-                <p class="form-footnote">We'll use your contact details only to follow up about this cleaning quote.</p>
-                <button class="quote-back" id="quote-back" type="button">← Back to home details</button>
-              </fieldset>
-            </form>
-          </div>
-          <div class="form-success" id="form-success" role="status" hidden>
-            <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div>
-            <div class="form-label">One step closer to a cleaner home</div>
-            <h3>Thank you for reaching out.</h3>
-            <p>Your cleaning quote request has been submitted. We'll use the contact details you provided to follow up about what you need.</p>
-            <button type="button" id="new-request">Request another quote</button>
-          </div>
         </div>
       </div>
     </section>
@@ -661,7 +627,7 @@
         </div>
         <div class="photo-grid"><figure><button class="photo-button" type="button"><picture><source type="image/webp" srcset="/assets/photos/bedroom-480.webp 480w, /assets/photos/bedroom-800.webp 800w" sizes="(max-width: 760px) 92vw, 360px"><img src="/assets/photos/bedroom-800.jpg" width="800" height="1067" alt="A clean bedroom with freshly vacuumed carpet and a neatly made bed" loading="lazy" decoding="async"></picture><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/></svg></span></button><figcaption><span class="number">01</span> A room to unwind in.</figcaption></figure><figure><button class="photo-button" type="button"><picture><source type="image/webp" srcset="/assets/photos/bathroom-480.webp 480w, /assets/photos/bathroom-800.webp 800w" sizes="(max-width: 760px) 92vw, 360px"><img src="/assets/photos/bathroom-800.jpg" width="800" height="1067" alt="A freshly cleaned bathroom with a white bathtub, tiled walls, and a large mirror" loading="lazy" decoding="async"></picture><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/></svg></span></button><figcaption><span class="number">02</span> One less thing to scrub.</figcaption></figure><figure><button class="photo-button" type="button"><picture><source type="image/webp" srcset="/assets/photos/nursery-480.webp 480w, /assets/photos/nursery-800.webp 800w" sizes="(max-width: 760px) 92vw, 360px"><img src="/assets/photos/nursery-800.jpg" width="800" height="600" alt="A clean nursery with a white crib, tidy furniture, and freshly vacuumed carpet" loading="lazy" decoding="async"></picture><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-3.5-3.5"/></svg></span></button><figcaption><span class="number">03</span> More room for family time.</figcaption></figure></div>
         <div class="gallery-cta">
-          <a class="button" href="#quote">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          <a class="button" href="/quote/">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
           <p>Find the right cleaning plan for your home.</p>
         </div>
       </div>
@@ -686,7 +652,7 @@
       <div class="wrap">
         <p class="section-label">What we clean</p>
         <h2 id="services-heading">House cleaning, and the jobs that come with it</h2>
-        <p class="subhead">Twelve services, grouped so you can find the one that matches the house. Pricing is a quote, not a number on this page. Call or text (304) 710-5430 or use the form.</p>
+        <p class="subhead">Twelve services, grouped so you can find the one that matches the house. Pricing is a quote, not a number on this page. Call or text (304) 710-5430 or <a href="/quote/">request a quote</a>.</p>
         <div class="card-grid"><a class="service-card" href="/house-cleaning/"><h3>Standard and recurring house cleaning</h3><p>Kitchens, bathrooms, dusting, and floors, one time or on a schedule. Pet-friendly, with a laundry add-on if you want it.</p><span class="more">See what’s included</span></a><a class="service-card" href="/deep-cleaning/"><h3>Deep cleaning</h3><p>A top-to-bottom reset when the house has fallen behind, and a good first visit before recurring service.</p><span class="more">See what’s included</span></a><a class="service-card" href="/move-in-move-out-cleaning/"><h3>Move-in and move-out cleaning</h3><p>A clean start before you unpack, or a walkthrough-ready home after the boxes are out.</p><span class="more">See what’s included</span></a><a class="service-card" href="/airbnb-turnover-cleaning/"><h3>Airbnb and rental turnover</h3><p>A full reset between guests or tenants. Kitchens, bathrooms, floors, and the next check-in.</p><span class="more">See what’s included</span></a><a class="service-card" href="/apartment-condo-cleaning/"><h3>Apartment and condo cleaning</h3><p>Sized to smaller homes in Huntington, Kenova, and Ceredo. The price depends on the space.</p><span class="more">See what’s included</span></a><a class="service-card" href="/commercial-cleaning/"><h3>Commercial and office cleaning</h3><p>Restrooms, break rooms, floors, dusting, and trash for offices, storefronts, and small businesses.</p><span class="more">See what’s included</span></a><a class="service-card" href="/holiday-cleaning/"><h3>Holiday and guest-ready cleaning</h3><p>Kitchens, bathrooms, guest rooms, and living areas before company arrives, or a reset after.</p><span class="more">See what’s included</span></a></div>
       </div>
     </section>
@@ -696,7 +662,7 @@
         <h2 id="area-heading">Towns we serve in West Virginia, Kentucky, and Ohio</h2>
         <div class="area-copy">
           <p>Country Roads Cleaning Solutions is the Kenova company. We clean homes and small businesses in these towns. A different business uses a similar name in Morgantown. That is not us. If you want a cleaner in Kenova, Huntington, Ashland, or Ironton, you are in the right place.</p>
-          <p>We opened in September 2026. We don’t publish a street address because customers don’t come to an office. We come to you. Put your ZIP code on the quote form if you aren’t sure you’re inside the area.</p>
+          <p>We opened in September 2026. We don’t publish a street address because customers don’t come to an office. We come to you. Put your ZIP code on the <a href="/quote/">quote form</a> if you aren’t sure you’re inside the area.</p>
           <p>Hours are Monday through Friday, 8:00 AM to 5:00 PM. Closed Saturday and Sunday. Call or text <a href="tel:+13047105430">(304) 710-5430</a> or email <a href="mailto:countryroadscleaningsolutions@gmail.com">countryroadscleaningsolutions@gmail.com</a>.</p>
         </div>
         <div class="town-columns"><div><h3>West Virginia</h3><ul><li><a href="/huntington-wv-house-cleaning/">Huntington</a></li><li><a href="/kenova-ceredo-house-cleaning/">Kenova</a></li><li><a href="/barboursville-wv-house-cleaning/">Barboursville</a></li><li><a href="/kenova-ceredo-house-cleaning/">Ceredo</a></li><li><a href="/barboursville-wv-house-cleaning/#milton">Milton</a></li><li><a href="/barboursville-wv-house-cleaning/#lavalette">Lavalette</a></li><li>Wayne</li></ul></div><div><h3>Kentucky</h3><ul><li><a href="/ashland-ky-house-cleaning/">Ashland</a></li><li>Flatwoods</li><li>Russell</li><li>Catlettsburg</li><li>Grayson</li><li>Raceland</li><li>Greenup</li></ul></div><div><h3>Ohio</h3><ul><li><a href="/ironton-oh-house-cleaning/">Ironton</a></li><li>South Point</li><li>Coal Grove</li><li>Chesapeake</li><li>Proctorville</li><li>Burlington</li></ul></div></div>
@@ -726,7 +692,7 @@
     </div>
     <div class="wrap footer-links">
       <button id="privacy-open" type="button">Privacy</button>
-      <a href="/#quote">Request a quote</a>
+      <a href="/quote/">Request a quote</a>
       <a href="https://www.google.com/maps?cid=7570965002888918614" target="_blank" rel="noopener noreferrer">Google reviews</a>
       <a href="https://g.page/r/CVa2G7SOeBFpEBM/review" target="_blank" rel="noopener noreferrer">Leave a review</a>
       <a href="https://www.facebook.com/profile.php?id=61592053743546" target="_blank" rel="noopener noreferrer">Facebook</a>
@@ -734,7 +700,7 @@
       <span>© <span id="copyright-year">2026</span> Country Roads Cleaning Solutions</span>
     </div>
   </footer>
-<div class="mobile-cta" id="mobile-cta"><a class="button" href="#quote">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+<div class="mobile-cta" id="mobile-cta"><a class="button" href="/quote/">Get my cleaning quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
 
   <dialog class="photo-dialog" id="photo-dialog" aria-label="Home photo viewer">
     <div class="photo-dialog-inner">

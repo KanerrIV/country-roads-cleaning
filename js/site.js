@@ -140,7 +140,9 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
   const mobileCta = $("mobile-cta");
   const heroCta = $("hero-cta");
   const quote = $("quote");
-  if (mobileCta && heroCta && quote && "IntersectionObserver" in window) {
+  const onQuotePage = /\/quote\/?$/.test(location.pathname);
+  if (mobileCta && onQuotePage) mobileCta.classList.remove("visible");
+  if (mobileCta && heroCta && quote && !onQuotePage && "IntersectionObserver" in window) {
     let heroPassed = false;
     let quoteVisible = false;
     const syncMobile = () => {
@@ -237,5 +239,207 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
       form.reset();
       showQuoteStep(1);
     });
+  }
+
+  const homeCarousel = $("home-carousel");
+  if (homeCarousel) {
+    const slides = [...homeCarousel.querySelectorAll(".photo-carousel-slide")];
+    const dots = [...homeCarousel.querySelectorAll(".photo-dot")];
+    const pauseButton = $("home-carousel-pause");
+    let photoIndex = 0;
+    let photoTimer = null;
+    let photosPaused = reducedMotion.matches;
+    const stopPhotos = () => { if (photoTimer) clearInterval(photoTimer); photoTimer = null; };
+    const startPhotos = () => {
+      stopPhotos();
+      if (!photosPaused && !document.hidden && !homeCarousel.matches(":hover") && !homeCarousel.contains(document.activeElement)) {
+        photoTimer = setInterval(() => showPhotoSlide(photoIndex + 1), 6000);
+      }
+    };
+    const updatePhotoPause = () => {
+      pauseButton.innerHTML = photosPaused
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8z"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>';
+      pauseButton.setAttribute("aria-label", photosPaused ? "Play automatic photos" : "Pause automatic photos");
+    };
+    const showPhotoSlide = (index, manual = false) => {
+      photoIndex = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => { slide.hidden = i !== photoIndex; });
+      dots.forEach((dot, i) => {
+        if (i === photoIndex) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      $("home-carousel-count").textContent = `${photoIndex + 1} / ${slides.length}`;
+      if (manual) {
+        const label = slides[photoIndex].getAttribute("aria-label") || `Photo ${photoIndex + 1}`;
+        $("home-carousel-announcement").textContent = label;
+        startPhotos();
+      }
+    };
+    $("home-carousel-prev").addEventListener("click", () => showPhotoSlide(photoIndex - 1, true));
+    $("home-carousel-next").addEventListener("click", () => showPhotoSlide(photoIndex + 1, true));
+    pauseButton.addEventListener("click", () => { photosPaused = !photosPaused; updatePhotoPause(); startPhotos(); });
+    dots.forEach((dot) => dot.addEventListener("click", () => showPhotoSlide(Number(dot.dataset.photoIndex), true)));
+    homeCarousel.addEventListener("mouseenter", stopPhotos);
+    homeCarousel.addEventListener("mouseleave", startPhotos);
+    homeCarousel.addEventListener("focusin", stopPhotos);
+    homeCarousel.addEventListener("focusout", () => requestAnimationFrame(startPhotos));
+    homeCarousel.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        showPhotoSlide(photoIndex + (event.key === "ArrowLeft" ? -1 : 1), true);
+      }
+    });
+    let photoTouchX = null;
+    let photoTouchY = null;
+    homeCarousel.addEventListener("touchstart", (event) => {
+      photoTouchX = event.touches[0].clientX;
+      photoTouchY = event.touches[0].clientY;
+      stopPhotos();
+    }, { passive: true });
+    homeCarousel.addEventListener("touchend", (event) => {
+      if (photoTouchX !== null && event.changedTouches.length) {
+        const dx = event.changedTouches[0].clientX - photoTouchX;
+        const dy = event.changedTouches[0].clientY - photoTouchY;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) showPhotoSlide(photoIndex + (dx < 0 ? 1 : -1), true);
+      }
+      photoTouchX = null;
+      photoTouchY = null;
+      startPhotos();
+    }, { passive: true });
+    document.addEventListener("visibilitychange", startPhotos);
+    reducedMotion.addEventListener("change", (event) => {
+      if (event.matches) { photosPaused = true; updatePhotoPause(); }
+      startPhotos();
+    });
+    showPhotoSlide(0);
+    updatePhotoPause();
+    startPhotos();
+  }
+
+  const quiz = $("q-form");
+  if (quiz) {
+    const steps = [...quiz.querySelectorAll(".quiz-step")];
+    const total = steps.length;
+    const phone = $("q-phone");
+    const email = $("q-email");
+    const name = $("q-full-name");
+    const nextButton = $("q-next");
+    const backButton = $("q-back");
+    const submitButton = $("q-submit");
+    let quizIndex = 0;
+    const submitLabel = submitButton.innerHTML;
+    const validateContacts = () => {
+      email.setCustomValidity("");
+      phone.setCustomValidity("");
+      if (!email.value.trim() && !phone.value.trim()) email.setCustomValidity("Please add a phone number or email so we can contact you.");
+      if (phone.value.trim()) {
+        const digits = phone.value.replace(/\D/g, "");
+        if (digits.length < 7 || digits.length > 15 || /[A-Za-z]/.test(phone.value)) phone.setCustomValidity("Please enter a valid phone number.");
+      }
+    };
+    const validateName = () => {
+      name.setCustomValidity(name.value.trim() ? "" : "Please enter your name.");
+    };
+    const showQuizStep = (index, focus = true) => {
+      quizIndex = index;
+      steps.forEach((step, i) => step.classList.toggle("is-current", i === index));
+      const progressText = `Question ${index + 1} of ${total}`;
+      const progressPct = `${((index + 1) / total) * 100}%`;
+      $("q-progress").textContent = progressText;
+      $("q-meter-bar").setAttribute("aria-valuenow", String(index + 1));
+      $("q-meter-bar").setAttribute("aria-valuetext", progressText);
+      $("q-meter").style.width = progressPct;
+      $("q-soap").style.left = progressPct;
+      backButton.hidden = index === 0;
+      const last = index === total - 1;
+      nextButton.hidden = last;
+      submitButton.hidden = !last;
+      if (focus) {
+        const target = steps[index].querySelector("input, select, textarea");
+        if (target) requestAnimationFrame(() => target.focus());
+      }
+    };
+    const stepValid = (index, report = false) => {
+      const step = steps[index];
+      const restore = !step.classList.contains("is-current");
+      step.classList.add("is-current");
+      if (step.querySelector("#q-phone")) validateContacts();
+      if (step.querySelector("#q-full-name")) validateName();
+      const fields = [...step.querySelectorAll("input, select, textarea")].filter((input) => input.type !== "hidden" && !input.closest(".honeypot"));
+      const bad = fields.find((input) => !input.checkValidity());
+      if (bad) {
+        if (report) bad.reportValidity();
+        else if (restore) step.classList.remove("is-current");
+        return false;
+      }
+      if (restore) step.classList.remove("is-current");
+      return true;
+    };
+    nextButton.addEventListener("click", () => {
+      if (stepValid(quizIndex, true)) showQuizStep(quizIndex + 1);
+    });
+    backButton.addEventListener("click", () => showQuizStep(quizIndex - 1));
+    [email, phone].forEach((input) => input.addEventListener("input", validateContacts));
+    name.addEventListener("input", () => name.setCustomValidity(""));
+    const configured = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(QUOTE_EMAIL);
+    quiz.addEventListener("submit", (event) => {
+      if (quizIndex < total - 1) {
+        event.preventDefault();
+        if (stepValid(quizIndex, true)) showQuizStep(quizIndex + 1);
+        return;
+      }
+      for (let i = 0; i < total; i += 1) {
+        if (!stepValid(i, false)) {
+          event.preventDefault();
+          showQuizStep(i, false);
+          stepValid(i, true);
+          return;
+        }
+      }
+      if ($("q-website").value) { event.preventDefault(); return; }
+      if (!configured) {
+        event.preventDefault();
+        $("q-status").textContent = "Online quote requests are temporarily unavailable. Please call (304) 710-5430.";
+        $("q-status").hidden = false;
+        return;
+      }
+      $("q-status").hidden = true;
+      const params = new URLSearchParams(location.search);
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"].forEach((key) => {
+        if (params.get(key)) {
+          let input = quiz.querySelector(`[name="${key}"]`);
+          if (!input) {
+            input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            quiz.append(input);
+          }
+          input.value = params.get(key).slice(0, 500);
+        }
+      });
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending your request…";
+    });
+    window.addEventListener("pageshow", () => {
+      submitButton.disabled = false;
+      submitButton.innerHTML = submitLabel;
+    });
+    $("q-new-request").addEventListener("click", () => {
+      $("q-form-wrap").hidden = false;
+      $("q-thanks").hidden = true;
+      history.replaceState(null, "", location.pathname);
+      quiz.reset();
+      email.setCustomValidity("");
+      phone.setCustomValidity("");
+      name.setCustomValidity("");
+      showQuizStep(0, true);
+    });
+    if (new URLSearchParams(location.search).has("sent")) {
+      $("q-form-wrap").hidden = true;
+      $("q-thanks").hidden = false;
+    } else {
+      showQuizStep(0, false);
+    }
   }
 })();

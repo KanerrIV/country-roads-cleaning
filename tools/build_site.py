@@ -22,6 +22,7 @@ BASE = "https://countryroadscleaningsolutions.com"
 PHONE = "(304) 710-5430"
 TEL = "tel:+13047105430"
 EMAIL = "countryroadscleaningsolutions@gmail.com"
+QUOTE_PATH = "/quote/"
 BUSINESS_ID = f"{BASE}/#business"
 WEBSITE_ID = f"{BASE}/#website"
 GSC = "MBFMHKZPEH1q2RIueenmKA9H5wVpUnKhdF_wFM3hnpw"
@@ -280,9 +281,14 @@ def faq_html(faqs: list[tuple[str, str]], heading: str) -> str:
     )
 
 
-def photo(name: str, widths: list[int], size: tuple[int, int], alt: str, sizes: str, lazy: bool = True) -> str:
+def photo(name: str, widths: list[int], size: tuple[int, int], alt: str, sizes: str, lazy: bool = True, *, priority: bool = True) -> str:
     srcset = ", ".join(f"/assets/photos/{name}-{width}.webp {width}w" for width in widths)
-    loading = 'loading="lazy" decoding="async"' if lazy else 'fetchpriority="high" decoding="async"'
+    if lazy:
+        loading = 'loading="lazy" decoding="async"'
+    elif priority:
+        loading = 'fetchpriority="high" decoding="async"'
+    else:
+        loading = 'decoding="async"'
     width, height = size
     return (
         f'<picture><source type="image/webp" srcset="{srcset}" sizes="{sizes}">'
@@ -512,7 +518,7 @@ def header(current: str) -> str:
       </a>
       <div class="header-actions">
         <a class="header-phone" href="{TEL}"><span class="sr-only">Call </span>{PHONE}</a>
-        <a class="button small" href="/#quote">Get a quote {ARROW}</a>
+        <a class="button small" href="{QUOTE_PATH}">Get a quote {ARROW}</a>
       </div>
       <nav class="primary-nav" aria-label="Primary">{''.join(links)}</nav>
     </div>
@@ -561,7 +567,7 @@ def footer(include_about: bool) -> str:
     </div>
     <div class="wrap footer-links">
       <button id="privacy-open" type="button">Privacy</button>
-      <a href="/#quote">Request a quote</a>
+      <a href="{QUOTE_PATH}">Request a quote</a>
       <a href="{GBP_URL}" target="_blank" rel="noopener noreferrer">Google reviews</a>
       <a href="{REVIEW_URL}" target="_blank" rel="noopener noreferrer">Leave a review</a>
       <a href="https://www.facebook.com/profile.php?id=61592053743546" target="_blank" rel="noopener noreferrer">Facebook</a>
@@ -614,10 +620,9 @@ def _prefix_ids(markup: str, prefix: str, ids: list[str]) -> str:
         markup = markup.replace(f'id="{id_}"', f'id="{prefix}{id_}"').replace(f'for="{id_}"', f'for="{prefix}{id_}"').replace(f'aria-describedby="{id_}"', f'aria-describedby="{prefix}{id_}"')
     return markup
 
-def quote_form(include_owner: bool) -> str:
-    owner = ""
-    if include_owner:
-        owner = f"""
+
+def team_figure() -> str:
+    return f"""
         <figure class="owner">
           <figcaption>
             <strong>The team behind Country Roads.</strong>
@@ -625,6 +630,71 @@ def quote_form(include_owner: bool) -> str:
           </figcaption>
           {photo("team", [400], (400, 513), "A member of the Country Roads Cleaning Solutions team", "(max-width: 760px) 92vw, 460px", lazy=True)}
         </figure>"""
+
+
+def home_carousel() -> str:
+    """Hero photo carousel. Not a lightbox trigger. Overlay copy is the existing hero line."""
+    photos = [
+        ("carousel-bedroom", (960, 715), "A tidy bedroom with a wooden house-frame bed, hardwood floors, and gray curtains", True),
+        ("carousel-bathroom", (960, 1280), "A freshly cleaned bathroom with a navy vanity, patterned tile floor, and a bright window", False),
+        ("carousel-hallway", (960, 1286), "A clean hallway with a wood console table, lamp, framed art, and a potted plant", False),
+        ("carousel-kitchen", (960, 1280), "A stainless gas range set into a white marble kitchen island", False),
+    ]
+    total = len(photos)
+    prev_icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>'
+    next_icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>'
+    pause_icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>'
+    slides = []
+    dots = []
+    for index, (name, size, alt, wide) in enumerate(photos):
+        hidden = "" if index == 0 else " hidden"
+        wide_class = " is-wide" if wide else ""
+        current = ' aria-current="true"' if index == 0 else ""
+        slides.append(
+            f'<div class="photo-carousel-slide{wide_class}" role="group" aria-roledescription="slide" aria-label="Photo {index + 1} of {total}"{hidden}>'
+            + photo(name, [640, 960], size, alt, "(max-width: 760px) 92vw, 480px", lazy=index != 0)
+            + "</div>"
+        )
+        dots.append(
+            f'<button class="photo-dot" type="button" data-photo-index="{index}" aria-label="Show photo {index + 1} of {total}"{current}></button>'
+        )
+    return f"""
+        <div class="photo-carousel hero-carousel" id="home-carousel" role="region" aria-roledescription="carousel" aria-label="Photos of homes cleaned by Country Roads" tabindex="0">
+          <div class="hero-image-frame photo-carousel-frame">
+            {''.join(slides)}
+            <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
+            <div class="photo-carousel-bar">
+              <button class="review-pause" id="home-carousel-pause" type="button" aria-label="Pause automatic photos">{pause_icon}</button>
+              <button class="icon-button" id="home-carousel-prev" type="button" aria-label="Previous home photo">{prev_icon}</button>
+              <div class="photo-dots" role="group" aria-label="Choose a photo">{''.join(dots)}</div>
+              <span class="review-count" id="home-carousel-count" aria-hidden="true">1 / {total}</span>
+              <button class="icon-button" id="home-carousel-next" type="button" aria-label="Next home photo">{next_icon}</button>
+            </div>
+          </div>
+          <p class="sr-only" id="home-carousel-announcement" aria-live="polite"></p>
+        </div>"""
+
+
+def homepage_quote() -> str:
+    """Homepage #quote story. No form and no carousel; the quiz lives at /quote/."""
+    return f"""
+    <section class="quote-section" id="quote" aria-labelledby="quote-heading">
+      <div class="wrap">
+        <div class="quote-story">
+          <p class="eyebrow">Kenova, West Virginia</p>
+          <h2 id="quote-heading">Your next free Saturday could look different.</h2>
+          <p>You already have plenty on your plate. Let us help with the cleaning.</p>
+          <p>Call or text <a href="{TEL}">{PHONE}</a> and tell us a little about the home or business. Then our team can get you a personalized quote.</p>
+          <p>Monday–Friday, 8:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.</p>
+          <div class="quote-cta"><a class="button" href="{QUOTE_PATH}">Get my cleaning quote {ARROW}</a></div>
+          {team_figure()}
+        </div>
+      </div>
+    </section>"""
+
+
+def quote_form(include_owner: bool) -> str:
+    owner = team_figure() if include_owner else ""
     return f"""
     <section class="quote-section" id="quote" aria-labelledby="quote-heading">
       <div class="wrap quote-grid">
@@ -676,7 +746,7 @@ def quote_form(include_owner: bool) -> str:
 
 
 def mobile_cta() -> str:
-    return f'<div class="mobile-cta" id="mobile-cta"><a class="button" href="#quote">Get my cleaning quote {ARROW}</a></div>'
+    return f'<div class="mobile-cta" id="mobile-cta"><a class="button" href="{QUOTE_PATH}">Get my cleaning quote {ARROW}</a></div>'
 
 
 def photo_dialog() -> str:
@@ -703,7 +773,7 @@ def page_hero(page: dict) -> str:
     buttons = f"""
       <div class="hero-cta" id="hero-cta">
         <a class="button" href="{TEL}">Call {PHONE}</a>
-        <a class="button ghost" href="#quote">Request a quote {ARROW}</a>
+        <a class="button ghost" href="{QUOTE_PATH}">Request a quote {ARROW}</a>
       </div>
       <p class="cta-note">Monday–Friday, 8:00 AM–5:00 PM. Women-owned, licensed, and insured. Based in Kenova, WV.</p>"""
     return f"""
@@ -812,14 +882,6 @@ def homepage() -> dict:
 
 
 def homepage_main() -> str:
-    living = photo(
-        "living-room",
-        [640, 960],
-        (960, 1280),
-        "A freshly cleaned living room with warm hardwood floors, comfortable seating, and natural light",
-        "(max-width: 760px) 92vw, 480px",
-        lazy=False,
-    )
     gallery = [
         ("bedroom", [480, 800], (800, 1067), "A clean bedroom with freshly vacuumed carpet and a neatly made bed", "01", "A room to unwind in."),
         ("bathroom", [480, 800], (800, 1067), "A freshly cleaned bathroom with a white bathtub, tiled walls, and a large mirror", "02", "One less thing to scrub."),
@@ -848,21 +910,18 @@ def homepage_main() -> str:
           </div>
           {reviews_html()}
           <div class="hero-cta" id="hero-cta">
-            <a class="button" href="#quote">Get my cleaning quote {ARROW}</a>
+            <a class="button" href="{QUOTE_PATH}">Get my cleaning quote {ARROW}</a>
             <a class="button ghost" href="{TEL}">Call {PHONE}</a>
           </div>
           <p class="cta-note">Tell us about your home. We’ll take it from there.</p>
         </div>
         <figure class="hero-visual">
-          <div class="hero-image-frame">
-            {living}
-            <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
-          </div>
+          {home_carousel()}
           <figcaption class="hero-caption"><span>A home cleaned by our team.</span><span>Real home. Real life.</span></figcaption>
         </figure>
       </div>
     </section>
-    {quote_form(True)}
+    {homepage_quote()}
     <section class="gallery-section" aria-label="Homes cleaned by Country Roads">
       <div class="wrap">
         <div class="gallery-heading">
@@ -871,7 +930,7 @@ def homepage_main() -> str:
         </div>
         <div class="photo-grid">{''.join(figures)}</div>
         <div class="gallery-cta">
-          <a class="button" href="#quote">Get my cleaning quote {ARROW}</a>
+          <a class="button" href="{QUOTE_PATH}">Get my cleaning quote {ARROW}</a>
           <p>Find the right cleaning plan for your home.</p>
         </div>
       </div>
@@ -896,7 +955,7 @@ def homepage_main() -> str:
       <div class="wrap">
         <p class="section-label">What we clean</p>
         <h2 id="services-heading">House cleaning, and the jobs that come with it</h2>
-        <p class="subhead">Twelve services, grouped so you can find the one that matches the house. Pricing is a quote, not a number on this page. Call or text {PHONE} or use the form.</p>
+        <p class="subhead">Twelve services, grouped so you can find the one that matches the house. Pricing is a quote, not a number on this page. Call or text {PHONE} or <a href="{QUOTE_PATH}">request a quote</a>.</p>
         {service_cards()}
       </div>
     </section>
@@ -906,7 +965,7 @@ def homepage_main() -> str:
         <h2 id="area-heading">Towns we serve in West Virginia, Kentucky, and Ohio</h2>
         <div class="area-copy">
           <p>Country Roads Cleaning Solutions is the Kenova company. We clean homes and small businesses in these towns. A different business uses a similar name in Morgantown. That is not us. If you want a cleaner in Kenova, Huntington, Ashland, or Ironton, you are in the right place.</p>
-          <p>We opened in September 2026. We don’t publish a street address because customers don’t come to an office. We come to you. Put your ZIP code on the quote form if you aren’t sure you’re inside the area.</p>
+          <p>We opened in September 2026. We don’t publish a street address because customers don’t come to an office. We come to you. Put your ZIP code on the <a href="{QUOTE_PATH}">quote form</a> if you aren’t sure you’re inside the area.</p>
           <p>Hours are Monday through Friday, 8:00 AM to 5:00 PM. Closed Saturday and Sunday. Call or text <a href="{TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
         </div>
         {town_list()}
@@ -1207,7 +1266,7 @@ def service_pages() -> list[dict]:
         <p>Yes, we also clean before Christmas and New Year’s visitors. The week of Christmas fills up like Thanksgiving week, so it helps to ask early. Tell us how many people are staying, which rooms they’ll use, and whether you want us before they arrive, after they leave, or both.</p>
         <p>We prefer not to schedule cleanings on Thanksgiving Day, Christmas Day, or New Year’s Day themselves. We’re glad to take holiday and event cleanings in the days around them, so ask about the dates before and after.</p>
         <h2>Before the guests, after the meal, or both</h2>
-        <p>You can book a guest-ready clean before company arrives, a reset after everyone leaves, or both. Before the visit, we put the kitchen, bathrooms, guest rooms, and living areas first. After the meal, the same kind of visit resets the kitchen and bathrooms. Tell us which you want when you <a href="/#quote">request a quote</a>.</p>
+        <p>You can book a guest-ready clean before company arrives, a reset after everyone leaves, or both. Before the visit, we put the kitchen, bathrooms, guest rooms, and living areas first. After the meal, the same kind of visit resets the kitchen and bathrooms. Tell us which you want when you <a href="{QUOTE_PATH}">request a quote</a>.</p>
         <p>Hosting guests in a rental instead of your own home? The <a href="/airbnb-turnover-cleaning/">rental turnover</a> page covers resets between check-ins.</p>
         <h2>What we put first in a holiday clean</h2>
         <p>Guests notice the rooms they use. A guest-ready clean puts the kitchen, the shared bathroom, guest rooms, and living areas first. If the house has fallen behind, book a <a href="/deep-cleaning/">deep clean before the holidays</a> so baseboards, the dusty fan, and built-up bathroom grime get attention too. Tell us which rooms matter most.</p>
@@ -1293,7 +1352,7 @@ def city_pages() -> list[dict]:
         <p>{esc(barboursville_sentence)} Standard and recurring cleaning, deep cleaning, and move-in and move-out cleaning are all available here, one time or on a schedule.</p>
         <h2>Where we clean around Barboursville</h2>
         <p>Barboursville is on our list, including the homes around the Huntington Mall and Pea Ridge. Highlawn and Guyandotte sit on Huntington’s east side, toward Barboursville, so east-end Huntington and Barboursville are part of the same drive for us. You don’t need a Huntington address. You need a ZIP we can reach within about 25 miles of Kenova.</p>
-        <p>Not sure whether your street counts? Put the ZIP code on the <a href="/#quote">quote form</a> or call or text <a href="{TEL}">{PHONE}</a>. If the drive doesn’t work, we’ll tell you instead of guessing. If you live closer in, see <a href="/huntington-wv-house-cleaning/">house cleaning in Huntington</a>.</p>
+        <p>Not sure whether your street counts? Put the ZIP code on the <a href="{QUOTE_PATH}">quote form</a> or call or text <a href="{TEL}">{PHONE}</a>. If the drive doesn’t work, we’ll tell you instead of guessing. If you live closer in, see <a href="/huntington-wv-house-cleaning/">house cleaning in Huntington</a>.</p>
         <h2 id="milton">House cleaning in Milton</h2>
         <p>Milton is on our service list too. It sits east of Barboursville and is still inside the area we cover from Kenova. We clean houses and apartments there the same way we do in Barboursville and Huntington: kitchens, bathrooms, dusting, and floors, once or on a schedule. Send your ZIP code on the quote form, or call or text to confirm before you book.</p>
         <h2 id="lavalette">House cleaning in Lavalette</h2>
@@ -1433,7 +1492,7 @@ def render_404() -> str:
         <p>Try one of these, or call us and we’ll point you to the right service.</p>
         """,
     }
-    # 404 hero links to #quote which exists because we include the form.
+    # The 404 page still includes a quote form. Hero and other CTAs go to /quote/.
     main = page_hero(page) + f"""
     <article class="article"><div class="article-inner prose">
       <p>Country Roads Cleaning Solutions is the Kenova, West Virginia house cleaning company. These are the pages that are actually on the site.</p>
@@ -1507,6 +1566,43 @@ def render_apply() -> str:
     return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
 
 
+def _plain_label(field_html: str) -> str:
+    match = re.search(r"<label\b[^>]*>(.*?)</label>", field_html, re.S)
+    if not match:
+        return "Question"
+    text = re.sub(r"<[^>]+>", "", match.group(1))
+    return " ".join(html.unescape(text).split())
+
+
+def _contact_quiz_parts() -> tuple[str, str, str]:
+    """Name, phone/email block, and notes from the shared contact fields, in quiz order."""
+    lines = [line.strip() for line in quote_contact_fields("q-").splitlines() if line.strip()]
+    if len(lines) != 7:
+        raise RuntimeError(f"quote contact fields layout changed ({len(lines)} lines)")
+    return lines[0], "\n".join(lines[1:6]), lines[6]
+
+
+def quote_quiz_steps() -> tuple[str, int]:
+    """One shared field per screen: six home questions, name, contact, then notes."""
+    home = [line.strip() for line in quote_home_fields("q-").splitlines() if line.strip()]
+    if len(home) != 6:
+        raise RuntimeError(f"quote home fields layout changed ({len(home)} lines)")
+    name, contact, notes = _contact_quiz_parts()
+    steps = [("field", item) for item in home]
+    steps.append(("field", name))
+    steps.append(("contact", contact))
+    steps.append(("notes", notes))
+    parts = []
+    for index, (kind, body) in enumerate(steps):
+        current = " is-current" if index == 0 else ""
+        if kind == "contact":
+            legend = "<legend>Where should we send your quote?</legend>"
+        else:
+            legend = f'<legend class="sr-only">{esc(_plain_label(body))}</legend>'
+        parts.append(f'<fieldset class="quiz-step quiz-step-{kind}{current}">{legend}{body}</fieldset>')
+    return "\n".join(parts), len(steps)
+
+
 def render_quote() -> str:
     page = {
         "path": "/quote/",
@@ -1514,6 +1610,8 @@ def render_quote() -> str:
         "description": "Request a free house or office cleaning quote from Country Roads Cleaning Solutions, a women-owned cleaning company in Kenova, WV.",
         "noindex": True,
     }
+    steps_html, total = quote_quiz_steps()
+    meter = f"{100 / total:.3f}"
     main = f"""
     <section class="page-hero">
       <div class="wrap prose">
@@ -1523,28 +1621,49 @@ def render_quote() -> str:
         <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 8:00 AM–5:00 PM.</p>
       </div>
     </section>
-    <section class="article"><div class="article-inner">
-      <div class="form-card apply-card">
-        <p class="form-status apply-thanks" id="q-thanks" hidden>Thanks for reaching out! We got your quote request and will follow up soon.</p>
-        <form class="apply-form quote-page-form" id="q-form" method="POST" action="https://formsubmit.co/{EMAIL}">
-          <fieldset class="quote-step">
-            <legend>A few quick details about the space</legend>
-{quote_home_fields("q-")}
-          </fieldset>
-          <fieldset class="quote-step">
-            <legend>Where should we send your quote?</legend>
-{quote_contact_fields("q-")}
-          </fieldset>
-          <div class="honeypot" aria-hidden="true"><label for="q-website">Leave this field empty</label><input id="q-website" name="_honey" tabindex="-1" autocomplete="off"></div>
-          <input type="hidden" name="_subject" value="New quote request | Country Roads Cleaning Solutions">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="{BASE}/quote/?sent=1">
-          <button class="button submit-button" type="submit">Request My Cleaning Quote {ARROW}</button>
-          <p class="form-footnote">We’ll use your contact details only to follow up about this cleaning quote.</p>
-        </form>
+    <section class="article" id="quote-quiz" aria-labelledby="quote-quiz-heading">
+      <div class="article-inner">
+        <div class="form-card quote-quiz-card" id="q-card">
+          <div id="q-form-wrap">
+            <p class="form-label" id="quote-quiz-heading">One question at a time</p>
+            <form class="quote-quiz" id="q-form" method="POST" action="https://formsubmit.co/{EMAIL}" novalidate>
+              <noscript>
+                <style>
+                  #q-form .quiz-step {{ display: block !important; }}
+                  #q-next, #q-back {{ display: none !important; }}
+                  #q-submit {{ display: inline-flex !important; }}
+                </style>
+                <p class="form-footnote">JavaScript walks through one question at a time. All of the questions are listed below so you can still send a request. Please include a phone number or an email address.</p>
+              </noscript>
+              <p class="sr-only" id="q-progress" aria-live="polite">Question 1 of {total}</p>
+              <div class="quiz-meter" id="q-meter-bar" role="progressbar" aria-valuemin="1" aria-valuemax="{total}" aria-valuenow="1" aria-valuetext="Question 1 of {total}">
+                <span class="quiz-meter-fill" id="q-meter" style="width:{meter}%"></span>
+                <span class="quiz-soap" id="q-soap" style="left:{meter}%" aria-hidden="true">🧼</span>
+              </div>
+{steps_html}
+              <div class="honeypot" aria-hidden="true"><label for="q-website">Leave this field empty</label><input id="q-website" name="_honey" tabindex="-1" autocomplete="off"></div>
+              <input type="hidden" name="_subject" value="New quote request | Country Roads Cleaning Solutions">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_next" id="q-next-url" value="{BASE}/quote/?sent=1">
+              <p class="form-status" id="q-status" role="alert" hidden></p>
+              <div class="quiz-nav" id="q-nav">
+                <button class="button submit-button" id="q-next" type="button">Continue {ARROW}</button>
+                <button class="button submit-button" id="q-submit" type="submit" hidden>Request My Cleaning Quote {ARROW}</button>
+                <button class="quote-back" id="q-back" type="button" hidden>Back</button>
+              </div>
+              <p class="form-footnote">We’ll use your contact details only to follow up about this cleaning quote.</p>
+            </form>
+          </div>
+          <div class="form-success" id="q-thanks" role="status" hidden>
+            <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div>
+            <div class="form-label">One step closer to a cleaner home</div>
+            <h2>Thank you for reaching out.</h2>
+            <p>Your cleaning quote request has been submitted. We’ll use the contact details you provided to follow up about what you need.</p>
+            <button type="button" id="q-new-request">Request another quote</button>
+          </div>
+        </div>
       </div>
-    </div></section>
-    <script>(function(){{var f=document.getElementById("q-form");if(new URLSearchParams(location.search).has("sent")){{document.getElementById("q-thanks").hidden=false;f.hidden=true;return;}}var p=document.getElementById("q-phone"),e=document.getElementById("q-email");function c(){{e.setCustomValidity("");p.setCustomValidity("");if(!e.value.trim()&&!p.value.trim())e.setCustomValidity("Please add a phone number or email so we can contact you.");if(p.value.trim()){{var d=p.value.replace(/\\D/g,"");if(d.length<7||d.length>15||/[A-Za-z]/.test(p.value))p.setCustomValidity("Please enter a valid phone number.");}}}}p.addEventListener("input",c);e.addEventListener("input",c);f.addEventListener("submit",function(ev){{c();if(!f.reportValidity()){{ev.preventDefault();return;}}var q=new URLSearchParams(location.search);["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"].forEach(function(k){{if(q.get(k)){{var i=document.createElement("input");i.type="hidden";i.name=k;i.value=q.get(k).slice(0,500);f.appendChild(i);}}}});}});}})();</script>
+    </section>
     """
     return document(page, main, include_about_in_footer=True, dialogs=privacy_dialog()).replace(mobile_cta(), "")
 
@@ -1767,6 +1886,8 @@ def validate(pages: list[tuple[dict, str]]) -> None:
     # 404 is validated separately below after write; include file map now
     file_for_url = {page["path"]: page["file"] for page, _markup in pages}
     file_for_url["/404.html"] = ROOT / "404.html"
+    file_for_url["/quote/"] = ROOT / "quote" / "index.html"
+    file_for_url["/apply/"] = ROOT / "apply" / "index.html"
 
     def page_by_path(path: str):
         for candidate, _markup in pages:
@@ -1890,11 +2011,52 @@ def main() -> None:
         quote_errors.append("FormSubmit action/_next wrong")
     if quote_home_fields() not in quote_form(False) or quote_contact_fields() not in quote_form(False):
         quote_errors.append("fields drifted from the site quote form")
+    for line in quote_home_fields("q-").splitlines() + quote_contact_fields("q-").splitlines():
+        stripped = line.strip()
+        if stripped and stripped not in quote_html:
+            quote_errors.append("quiz is missing a shared field: " + stripped[:80])
+    if "Question 1 of 9" not in quote_html or 'id="q-form"' not in quote_html:
+        quote_errors.append("quiz progress or form missing")
+    if "🧼" not in quote_html or 'role="progressbar"' not in quote_html:
+        quote_errors.append("quiz progress bar or soap marker missing")
+    if 'class="quote-progress"' in quote_html:
+        quote_errors.append("visible question count should not be on the quiz")
+    if quote_html.count('class="quiz-step') != 9:
+        quote_errors.append("quiz should have 9 questions")
     if PHONE not in quote_html or "8:00 AM" not in quote_html:
         quote_errors.append("phone/hours not visible")
+    home_markup = next(markup for page, markup in pages if page["path"] == "/")
+    if 'id="quote-form"' in home_markup or 'class="form-card"' in home_markup:
+        quote_errors.append("homepage still embeds the quote form")
+    hero_markup, _, quote_and_after = home_markup.partition('id="quote"')
+    quote_markup = quote_and_after.split('class="gallery-section"', 1)[0]
+    if 'id="home-carousel"' not in hero_markup:
+        quote_errors.append("hero is missing the photo carousel")
+    if "A home you can enjoy. A weekend you can keep." not in hero_markup:
+        quote_errors.append("hero overlay copy missing")
+    if 'id="home-carousel"' in quote_markup or "carousel-" in quote_markup:
+        quote_errors.append("quote section should not contain the carousel")
+    for needle in (
+        "You already have plenty on your plate. Let us help with the cleaning.",
+        f'Call or text <a href="{TEL}">{PHONE}</a> and tell us a little about the home or business. Then our team can get you a personalized quote.',
+        "Monday–Friday, 8:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.",
+        "/assets/photos/carousel-bedroom-960.jpg",
+        "/assets/photos/carousel-bathroom-960.jpg",
+        "/assets/photos/carousel-hallway-960.jpg",
+        "/assets/photos/carousel-kitchen-960.jpg",
+    ):
+        if needle not in home_markup:
+            quote_errors.append("homepage missing: " + needle[:70])
+    if "You don't have to figure out the whole plan before asking for a quote." in home_markup:
+        quote_errors.append("homepage still has the old quote paragraph")
+    linked = [markup for _page, markup in pages] + [not_found_html, render_apply(), quote_html]
+    for blob in linked:
+        if 'href="/#quote"' in blob or 'href="#quote"' in blob:
+            quote_errors.append("a generated page still links to #quote")
+            break
     if quote_errors:
         sys.exit("/quote/ validation failed: " + "; ".join(quote_errors))
-    print("Validated /quote/ (noindex, unlisted, no mobile bar, fields match site form).")
+    print("Validated /quote/ (noindex, unlisted, no mobile bar, one question at a time, homepage carousel).")
     print("CNAME unchanged:", cname.strip())
 
 
