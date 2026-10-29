@@ -344,8 +344,13 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
     const showQuizStep = (index, focus = true) => {
       quizIndex = index;
       steps.forEach((step, i) => step.classList.toggle("is-current", i === index));
-      $("q-progress").textContent = `Question ${index + 1} of ${total}`;
-      $("q-meter").style.width = `${((index + 1) / total) * 100}%`;
+      const progressText = `Question ${index + 1} of ${total}`;
+      const progressPct = `${((index + 1) / total) * 100}%`;
+      $("q-progress").textContent = progressText;
+      $("q-meter-bar").setAttribute("aria-valuenow", String(index + 1));
+      $("q-meter-bar").setAttribute("aria-valuetext", progressText);
+      $("q-meter").style.width = progressPct;
+      $("q-soap").style.left = progressPct;
       backButton.hidden = index === 0;
       const last = index === total - 1;
       nextButton.hidden = last;

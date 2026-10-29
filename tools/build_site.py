@@ -633,7 +633,7 @@ def team_figure() -> str:
 
 
 def home_carousel() -> str:
-    """Photo carousel that replaces the homepage quote form. Not a lightbox trigger."""
+    """Hero photo carousel. Not a lightbox trigger. Overlay copy is the existing hero line."""
     photos = [
         ("carousel-bedroom", (960, 715), "A tidy bedroom with a wooden house-frame bed, hardwood floors, and gray curtains", True),
         ("carousel-bathroom", (960, 1280), "A freshly cleaned bathroom with a navy vanity, patterned tile floor, and a bright window", False),
@@ -652,31 +652,34 @@ def home_carousel() -> str:
         current = ' aria-current="true"' if index == 0 else ""
         slides.append(
             f'<div class="photo-carousel-slide{wide_class}" role="group" aria-roledescription="slide" aria-label="Photo {index + 1} of {total}"{hidden}>'
-            + photo(name, [640, 960], size, alt, "(max-width: 760px) 92vw, 540px", lazy=index != 0, priority=False)
+            + photo(name, [640, 960], size, alt, "(max-width: 760px) 92vw, 480px", lazy=index != 0)
             + "</div>"
         )
         dots.append(
             f'<button class="photo-dot" type="button" data-photo-index="{index}" aria-label="Show photo {index + 1} of {total}"{current}></button>'
         )
     return f"""
-        <div class="photo-carousel" id="home-carousel" role="region" aria-roledescription="carousel" aria-label="Photos of homes cleaned by Country Roads" tabindex="0">
-          <div class="photo-carousel-frame">{''.join(slides)}</div>
-          <div class="photo-carousel-bar">
-            <button class="review-pause" id="home-carousel-pause" type="button" aria-label="Pause automatic photos">{pause_icon}</button>
-            <button class="icon-button" id="home-carousel-prev" type="button" aria-label="Previous home photo">{prev_icon}</button>
-            <div class="photo-dots" role="group" aria-label="Choose a photo">{''.join(dots)}</div>
-            <span class="review-count" id="home-carousel-count" aria-hidden="true">1 / {total}</span>
-            <button class="icon-button" id="home-carousel-next" type="button" aria-label="Next home photo">{next_icon}</button>
+        <div class="photo-carousel hero-carousel" id="home-carousel" role="region" aria-roledescription="carousel" aria-label="Photos of homes cleaned by Country Roads" tabindex="0">
+          <div class="hero-image-frame photo-carousel-frame">
+            {''.join(slides)}
+            <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
+            <div class="photo-carousel-bar">
+              <button class="review-pause" id="home-carousel-pause" type="button" aria-label="Pause automatic photos">{pause_icon}</button>
+              <button class="icon-button" id="home-carousel-prev" type="button" aria-label="Previous home photo">{prev_icon}</button>
+              <div class="photo-dots" role="group" aria-label="Choose a photo">{''.join(dots)}</div>
+              <span class="review-count" id="home-carousel-count" aria-hidden="true">1 / {total}</span>
+              <button class="icon-button" id="home-carousel-next" type="button" aria-label="Next home photo">{next_icon}</button>
+            </div>
           </div>
           <p class="sr-only" id="home-carousel-announcement" aria-live="polite"></p>
         </div>"""
 
 
 def homepage_quote() -> str:
-    """Homepage #quote story. The form lives on /quote/; this side is copy plus photos."""
+    """Homepage #quote story. No form and no carousel; the quiz lives at /quote/."""
     return f"""
     <section class="quote-section" id="quote" aria-labelledby="quote-heading">
-      <div class="wrap quote-grid">
+      <div class="wrap">
         <div class="quote-story">
           <p class="eyebrow">Kenova, West Virginia</p>
           <h2 id="quote-heading">Your next free Saturday could look different.</h2>
@@ -686,7 +689,6 @@ def homepage_quote() -> str:
           <div class="quote-cta"><a class="button" href="{QUOTE_PATH}">Get my cleaning quote {ARROW}</a></div>
           {team_figure()}
         </div>
-        {home_carousel()}
       </div>
     </section>"""
 
@@ -880,14 +882,6 @@ def homepage() -> dict:
 
 
 def homepage_main() -> str:
-    living = photo(
-        "living-room",
-        [640, 960],
-        (960, 1280),
-        "A freshly cleaned living room with warm hardwood floors, comfortable seating, and natural light",
-        "(max-width: 760px) 92vw, 480px",
-        lazy=False,
-    )
     gallery = [
         ("bedroom", [480, 800], (800, 1067), "A clean bedroom with freshly vacuumed carpet and a neatly made bed", "01", "A room to unwind in."),
         ("bathroom", [480, 800], (800, 1067), "A freshly cleaned bathroom with a white bathtub, tiled walls, and a large mirror", "02", "One less thing to scrub."),
@@ -922,10 +916,7 @@ def homepage_main() -> str:
           <p class="cta-note">Tell us about your home. We’ll take it from there.</p>
         </div>
         <figure class="hero-visual">
-          <div class="hero-image-frame">
-            {living}
-            <div class="photo-note"><span class="tiny">Country Roads Cleaning Solutions</span><p>A home you can enjoy. A weekend you can keep.</p></div>
-          </div>
+          {home_carousel()}
           <figcaption class="hero-caption"><span>A home cleaned by our team.</span><span>Real home. Real life.</span></figcaption>
         </figure>
       </div>
@@ -1644,8 +1635,11 @@ def render_quote() -> str:
                 </style>
                 <p class="form-footnote">JavaScript walks through one question at a time. All of the questions are listed below so you can still send a request. Please include a phone number or an email address.</p>
               </noscript>
-              <p class="quote-progress" id="q-progress" aria-live="polite">Question 1 of {total}</p>
-              <div class="quiz-meter" aria-hidden="true"><span id="q-meter" style="width:{meter}%"></span></div>
+              <p class="sr-only" id="q-progress" aria-live="polite">Question 1 of {total}</p>
+              <div class="quiz-meter" id="q-meter-bar" role="progressbar" aria-valuemin="1" aria-valuemax="{total}" aria-valuenow="1" aria-valuetext="Question 1 of {total}">
+                <span class="quiz-meter-fill" id="q-meter" style="width:{meter}%"></span>
+                <span class="quiz-soap" id="q-soap" style="left:{meter}%" aria-hidden="true">🧼</span>
+              </div>
 {steps_html}
               <div class="honeypot" aria-hidden="true"><label for="q-website">Leave this field empty</label><input id="q-website" name="_honey" tabindex="-1" autocomplete="off"></div>
               <input type="hidden" name="_subject" value="New quote request | Country Roads Cleaning Solutions">
@@ -2023,6 +2017,10 @@ def main() -> None:
             quote_errors.append("quiz is missing a shared field: " + stripped[:80])
     if "Question 1 of 9" not in quote_html or 'id="q-form"' not in quote_html:
         quote_errors.append("quiz progress or form missing")
+    if "🧼" not in quote_html or 'role="progressbar"' not in quote_html:
+        quote_errors.append("quiz progress bar or soap marker missing")
+    if 'class="quote-progress"' in quote_html:
+        quote_errors.append("visible question count should not be on the quiz")
     if quote_html.count('class="quiz-step') != 9:
         quote_errors.append("quiz should have 9 questions")
     if PHONE not in quote_html or "8:00 AM" not in quote_html:
@@ -2030,18 +2028,25 @@ def main() -> None:
     home_markup = next(markup for page, markup in pages if page["path"] == "/")
     if 'id="quote-form"' in home_markup or 'class="form-card"' in home_markup:
         quote_errors.append("homepage still embeds the quote form")
+    hero_markup, _, quote_and_after = home_markup.partition('id="quote"')
+    quote_markup = quote_and_after.split('class="gallery-section"', 1)[0]
+    if 'id="home-carousel"' not in hero_markup:
+        quote_errors.append("hero is missing the photo carousel")
+    if "A home you can enjoy. A weekend you can keep." not in hero_markup:
+        quote_errors.append("hero overlay copy missing")
+    if 'id="home-carousel"' in quote_markup or "carousel-" in quote_markup:
+        quote_errors.append("quote section should not contain the carousel")
     for needle in (
         "You already have plenty on your plate. Let us help with the cleaning.",
         f'Call or text <a href="{TEL}">{PHONE}</a> and tell us a little about the home or business. Then our team can get you a personalized quote.',
         "Monday–Friday, 8:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.",
-        'id="home-carousel"',
         "/assets/photos/carousel-bedroom-960.jpg",
         "/assets/photos/carousel-bathroom-960.jpg",
         "/assets/photos/carousel-hallway-960.jpg",
         "/assets/photos/carousel-kitchen-960.jpg",
     ):
         if needle not in home_markup:
-            quote_errors.append("homepage quote section missing: " + needle[:70])
+            quote_errors.append("homepage missing: " + needle[:70])
     if "You don't have to figure out the whole plan before asking for a quote." in home_markup:
         quote_errors.append("homepage still has the old quote paragraph")
     linked = [markup for _page, markup in pages] + [not_found_html, render_apply(), quote_html]
