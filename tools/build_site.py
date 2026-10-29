@@ -187,7 +187,7 @@ FAQ_HOME = [
     ),
     (
         "What are your hours?",
-        "Monday through Friday, 9 AM to 5 PM. We're closed Saturday and Sunday.",
+        "Monday through Friday, 8 AM to 5 PM. We're closed Saturday and Sunday.",
     ),
 ]
 
@@ -255,7 +255,7 @@ def how_we_work() -> str:
     <h2>How a visit works</h2>
     <p>We're licensed and insured, and we bring our own supplies and equipment. If you want a particular product used in your home, tell us when you request the quote. We accept all forms of payment. Say what you prefer when we confirm the cleaning.</p>
     <p>You don't have to be home. We arrange keys or other access with you directly. Please don't put a door code in the website form. Call or text <a href="{TEL}">{PHONE}</a> and we'll set it up with you.</p>
-    <p>Country Roads Cleaning Solutions is women-owned and based in Kenova, West Virginia. You can reach us Monday through Friday, 9:00 AM to 5:00 PM. We're closed Saturday and Sunday.</p>
+    <p>Country Roads Cleaning Solutions is women-owned and based in Kenova, West Virginia. You can reach us Monday through Friday, 8:00 AM to 5:00 PM. We're closed Saturday and Sunday.</p>
     """
 
 
@@ -337,11 +337,11 @@ def business_node() -> dict:
             "longitude": -82.5821,
         },
         "areaServed": area_served_nodes(),
-        "openingHours": "Mo-Fr 09:00-17:00",
+        "openingHours": "Mo-Fr 08:00-17:00",
         "openingHoursSpecification": [{
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
+            "opens": "08:00",
             "closes": "17:00",
         }],
         "currenciesAccepted": "USD",
@@ -546,7 +546,7 @@ def footer(include_about: bool) -> str:
         {about}
         <p class="footer-meta">Women-owned house cleaning based in Kenova, WV 25530. Serving the Huntington Tri-State — not the Morgantown company with a similar name.</p>
         <p class="footer-meta"><a href="{TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p>
-        <p class="footer-meta">Monday–Friday, 9:00 AM–5:00 PM. Closed Saturday and Sunday.</p>
+        <p class="footer-meta">Monday–Friday, 8:00 AM–5:00 PM. Closed Saturday and Sunday.</p>
       </div>
       <div>
         <p class="footer-heading">Services</p>
@@ -631,7 +631,7 @@ def quote_form(include_owner: bool) -> str:
           <h2 id="quote-heading">Your next free Saturday could look different.</h2>
           <p>You already have plenty on your plate. Let us help with the cleaning.</p>
           <p>Call or text <a href="{TEL}">{PHONE}</a>, or tell us a little about the home or business. You don't have to figure out the whole plan before asking for a quote.</p>
-          <p>Monday–Friday, 9:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.</p>
+          <p>Monday–Friday, 8:00 AM–5:00 PM. We serve homes and businesses within about 25 miles of Kenova.</p>
           {owner}
         </div>
         <div class="form-card">
@@ -703,7 +703,7 @@ def page_hero(page: dict) -> str:
         <a class="button" href="{TEL}">Call {PHONE}</a>
         <a class="button ghost" href="#quote">Request a quote {ARROW}</a>
       </div>
-      <p class="cta-note">Monday–Friday, 9:00 AM–5:00 PM. Women-owned, licensed, and insured. Based in Kenova, WV.</p>"""
+      <p class="cta-note">Monday–Friday, 8:00 AM–5:00 PM. Women-owned, licensed, and insured. Based in Kenova, WV.</p>"""
     return f"""
     <section class="page-hero">
       <div class="wrap prose">
@@ -839,7 +839,7 @@ def homepage_main() -> str:
           <h1 id="page-title">Get Your Evenings and Weekends Back Without Letting the House Fall Behind</h1>
           <p class="subhead">Women-owned and local. Country Roads Cleaning Solutions cleans homes and small businesses from our base in Kenova.</p>
           <div class="trust-row">
-            <span>Mon–Fri, 9:00 AM–5:00 PM</span>
+            <span>Mon–Fri, 8:00 AM–5:00 PM</span>
             <span>Licensed and insured</span>
             <span>Supplies included</span>
             <span>All forms of payment</span>
@@ -905,7 +905,7 @@ def homepage_main() -> str:
         <div class="area-copy">
           <p>Country Roads Cleaning Solutions is the Kenova company. We clean homes and small businesses in these towns. A different business uses a similar name in Morgantown. That is not us. If you want a cleaner in Kenova, Huntington, Ashland, or Ironton, you are in the right place.</p>
           <p>We opened in September 2026. We don’t publish a street address because customers don’t come to an office. We come to you. Put your ZIP code on the quote form if you aren’t sure you’re inside the area.</p>
-          <p>Hours are Monday through Friday, 9:00 AM to 5:00 PM. Closed Saturday and Sunday. Call or text <a href="{TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+          <p>Hours are Monday through Friday, 8:00 AM to 5:00 PM. Closed Saturday and Sunday. Call or text <a href="{TEL}">{PHONE}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
         </div>
         {town_list()}
       </div>
@@ -934,7 +934,7 @@ def office_huntington_page() -> dict:
     faqs = [
         ("How often should a small office be cleaned?", "It depends on how many people use the space and how hard the restrooms and break room get used. A busy storefront needs more frequent visits than a quiet office. Tell us your headcount, foot traffic, and when the space is empty, and we'll recommend a schedule that keeps it presentable without paying for visits you don't need."),
         ("How much does office cleaning cost in Huntington?", "We don't publish a rate card, because a small office and a busy storefront are different jobs. The quote depends on the size of the space, the number of restrooms, how often you want visits, and what needs attention. Call (304) 710-5430 or use the quote form with \"Not a home (office or other)\" selected."),
-        ("Can you clean before or after business hours?", "Our phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean, and we'll confirm a schedule that works around your customers and staff. We don't promise nights or weekends up front, but ask and we'll tell you honestly whether we can."),
+        ("Can you clean before or after business hours?", "Our phone hours are Monday through Friday, 8:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean, and we'll confirm a schedule that works around your customers and staff. We don't promise nights or weekends up front, but ask and we'll tell you honestly whether we can."),
         ("What kinds of businesses do you clean?", "We clean offices, storefronts, and other small businesses. We don't take on hospitals, factories, or whole school buildings. If your space has something unusual, like a showroom, a back office, or a treatment room, describe it on the quote form or call (304) 710-5430, and we'll tell you whether it fits."),
         ("Do you only clean in Huntington?", "No. Huntington is the largest city we serve, but we're based in Kenova and cover businesses within about 25 miles, including Ceredo, Barboursville, Ashland, and Ironton. An office near Pullman Square in Huntington and a storefront on Winchester Avenue in Ashland are both ordinary drives for us. Send your ZIP code if you're near the edge."),
         ("Are you insured, and do you bring supplies?", "Yes. Country Roads Cleaning Solutions is licensed and insured, and we bring our own supplies and equipment. If your building requires a specific product, tell us and we'll use it. We're women-owned and based in Kenova. Keys or alarm access are arranged by phone, so please don't send door codes through the website form."),
@@ -969,7 +969,7 @@ def office_huntington_page() -> dict:
         <p>Huntington sits well inside the area we cover from Kenova. A business in <a href="/ashland-ky-house-cleaning/">Ashland</a> or <a href="/ironton-oh-house-cleaning/">Ironton</a> works the same way. If you’re not sure the drive works, put your ZIP code on the quote form and we’ll confirm.</p>
         <h2>What should I tell you when I ask for a quote?</h2>
         <p>Tell us what kind of business it is, roughly how big the space is, how many restrooms it has, and when it’s empty enough to clean. Mention how often you’d like visits and anything unusual, like a showroom floor or a back office. On the quote form, choose “Not a home (office or other)” for bedrooms and bathrooms.</p>
-        <p>For the cleaning type, pick “Commercial or office cleaning.” Please don’t send door codes, alarm codes, or key details through the form. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM, and we’ll arrange access with you by phone.</p>
+        <p>For the cleaning type, pick “Commercial or office cleaning.” Please don’t send door codes, alarm codes, or key details through the form. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 8:00 AM to 5:00 PM, and we’ll arrange access with you by phone.</p>
         {related([("/commercial-cleaning/", "Commercial cleaning across the Tri-State"), ("/huntington-wv-house-cleaning/", "House cleaning in Huntington"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     }
@@ -1157,7 +1157,7 @@ def service_pages() -> list[dict]:
         <p>This is for offices, storefronts, and small businesses, not for hospitals, factories, or a whole school. A typical visit covers restrooms, the break room, floors, dusting, and trash. If you need something beyond that — a showroom, a back office, a treatment room — describe it on the quote. We’ll say whether it fits.</p>
         <p>We’re based in Kenova and regularly cover Ceredo and Huntington. Ashland, Ironton, Barboursville, and the other towns within about 25 miles are in the same service area. A storefront on Winchester Avenue in Ashland and an office near Pullman Square in Huntington are both ordinary drives for us.</p>
         <h2>Scheduling around the business</h2>
-        <p>Our phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean. We’ll confirm a schedule that works around customers and staff. We don’t promise nights or weekends on this page. If you need a time outside those phone hours, ask when you call and we’ll tell you honestly whether we can do it.</p>
+        <p>Our phone hours are Monday through Friday, 8:00 AM to 5:00 PM. Call then and tell us when the space is empty enough to clean. We’ll confirm a schedule that works around customers and staff. We don’t promise nights or weekends on this page. If you need a time outside those phone hours, ask when you call and we’ll tell you honestly whether we can do it.</p>
         <p>We’re licensed and insured. We bring supplies unless you need a product your building already specifies. Payment can be whatever form you already use. There’s no rate card, because a two-room office and a busy storefront are different jobs.</p>
         {how_we_work()}
         {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo")])}
@@ -1257,7 +1257,7 @@ def city_pages() -> list[dict]:
         <p><a href="/office-cleaning-huntington-wv/">Small offices and storefronts downtown</a> or along the main roads can use <a href="/commercial-cleaning/">commercial cleaning</a>. Describe the space. We don’t assume every business wants the same checklist.</p>
         <h2>Practical notes for a Huntington home</h2>
         <p>A lot of the houses south of downtown and in Guyandotte are older, with trim, stairs, and bathrooms that take longer than a new build of the same square footage. Tell us the age and the condition in the notes if you know it. That keeps the quote closer to the real job. We bring supplies, we’re pet friendly, and we’re licensed and insured.</p>
-        <p>We’re women-owned and based in Kenova, not in Morgantown. Phone hours are Monday through Friday, 9:00 AM to 5:00 PM. Call or text <a href="{TEL}">{PHONE}</a>.</p>
+        <p>We’re women-owned and based in Kenova, not in Morgantown. Phone hours are Monday through Friday, 8:00 AM to 5:00 PM. Call or text <a href="{TEL}">{PHONE}</a>.</p>
         {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/apartment-condo-cleaning/", "Apartments"), ("/commercial-cleaning/", "Office cleaning"), ("/office-cleaning-huntington-wv/", "Office cleaning in Huntington"), ("/holiday-cleaning/", "Holiday cleaning"), ("/barboursville-wv-house-cleaning/", "Barboursville"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     })
@@ -1334,7 +1334,7 @@ def city_pages() -> list[dict]:
         <p>Westwood is its own city next to Ashland. It isn’t on our published 20-town list. If you’re there, send the ZIP anyway and we’ll tell you whether the drive works. We’d rather say no than guess.</p>
         <h2>Services that fit Ashland homes</h2>
         <p>River-town houses often need more time in the kitchen and on the floors than a newer house of the same size. A <a href="/deep-cleaning/">deep clean</a> is a good first visit. <a href="/house-cleaning/">Recurring cleaning</a> keeps it that way. <a href="/move-in-move-out-cleaning/">Move-out cleaning</a> is the visit to book when you’re handing a rental back or selling. Offices and storefronts on Winchester Avenue can use <a href="/commercial-cleaning/">commercial cleaning</a>.</p>
-        <p>Ashland and the nearby Kentucky towns are inside our service area. The quote depends on size and condition. We’re licensed and insured, we bring supplies, and we accept all forms of payment. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM.</p>
+        <p>Ashland and the nearby Kentucky towns are inside our service area. The quote depends on size and condition. We’re licensed and insured, we bring supplies, and we accept all forms of payment. Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 8:00 AM to 5:00 PM.</p>
         {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/commercial-cleaning/", "Office cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/ironton-oh-house-cleaning/", "Ironton"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
         """,
     })
@@ -1362,7 +1362,7 @@ def city_pages() -> list[dict]:
         <p>Coal Grove is just up against Ironton. South Point and Burlington are close to Kenova, across the river from our base. Chesapeake sits across from Huntington, and Proctorville is farther up the river. All of them are on the service list. If your house is in one of those towns, you’re not “out of the way” for a Kenova cleaner. You’re in the area we already drive.</p>
         <h2>Older houses, honest quotes</h2>
         <p>A lot of homes near downtown Ironton were built when the railroad and the mills were the reason the town was here. Smaller rooms, original trim, and bathrooms that need a real scrub are normal. Tell us that on the quote. A <a href="/deep-cleaning/">deep clean</a> is usually the right first visit. Afterward, <a href="/house-cleaning/">weekly, every-two-weeks, or monthly cleaning</a> keeps the kitchen and bathrooms from sliding.</p>
-        <p>Move-out cleans are common when a house sells or a tenant leaves. Use the <a href="/move-in-move-out-cleaning/">move-in and move-out page</a> and include the date. Small offices can be quoted through <a href="/commercial-cleaning/">commercial cleaning</a>. Ironton and the nearby Ohio towns are inside our service area. Call or text <a href="{TEL}">{PHONE}</a> during Monday–Friday, 9:00 AM–5:00 PM.</p>
+        <p>Move-out cleans are common when a house sells or a tenant leaves. Use the <a href="/move-in-move-out-cleaning/">move-in and move-out page</a> and include the date. Small offices can be quoted through <a href="/commercial-cleaning/">commercial cleaning</a>. Ironton and the nearby Ohio towns are inside our service area. Call or text <a href="{TEL}">{PHONE}</a> during Monday–Friday, 8:00 AM–5:00 PM.</p>
         {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-out cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/kenova-ceredo-house-cleaning/", "Kenova & Ceredo"), ("/huntington-wv-house-cleaning/", "Huntington")])}
         """,
     })
@@ -1395,7 +1395,7 @@ def city_pages() -> list[dict]:
         <h2>What we clean here</h2>
         <p><a href="/house-cleaning/">Standard cleaning</a> covers kitchens, bathrooms, dusting, and floors, once or on a weekly, every-two-weeks, or monthly visit. A <a href="/deep-cleaning/">deep clean</a> is the first visit when the house has fallen behind. <a href="/move-in-move-out-cleaning/">Move-in and move-out cleaning</a> is for a sale or a rental handoff. Small offices and storefronts in either town can be quoted as <a href="/commercial-cleaning/">commercial cleaning</a>.</p>
         <p>We don’t publish a street address. Customers don’t visit an office. We come to the house, and we arrange keys with you by phone. Please don’t send a door code through the form. We’re women-owned, licensed, and insured, we bring supplies, and we accept all forms of payment. We opened in September 2026.</p>
-        <p>Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM, or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+        <p>Call or text <a href="{TEL}">{PHONE}</a> Monday through Friday, 8:00 AM to 5:00 PM, or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
         {related([("/house-cleaning/", "House cleaning"), ("/deep-cleaning/", "Deep cleaning"), ("/move-in-move-out-cleaning/", "Move-in / out"), ("/commercial-cleaning/", "Commercial cleaning"), ("/holiday-cleaning/", "Holiday cleaning"), ("/huntington-wv-house-cleaning/", "Huntington"), ("/barboursville-wv-house-cleaning/", "Barboursville"), ("/ashland-ky-house-cleaning/", "Ashland"), ("/ironton-oh-house-cleaning/", "Ironton")])}
         """,
     })
@@ -1436,7 +1436,7 @@ def render_404() -> str:
     <article class="article"><div class="article-inner prose">
       <p>Country Roads Cleaning Solutions is the Kenova, West Virginia house cleaning company. These are the pages that are actually on the site.</p>
       {related(NAV)}
-      <p>Or call <a href="{TEL}">{PHONE}</a> Monday through Friday, 9:00 AM to 5:00 PM.</p>
+      <p>Or call <a href="{TEL}">{PHONE}</a> Monday through Friday, 8:00 AM to 5:00 PM.</p>
     </div></article>
     {quote_form(False)}
     """
@@ -1518,7 +1518,7 @@ def render_quote() -> str:
         <p class="eyebrow">Free quote</p>
         <h1>Request a cleaning quote</h1>
         <p class="lede">We’re a women-owned, licensed, and insured cleaning company based in Kenova, WV. We bring our own supplies and serve homes and businesses within about 25 miles. Tell us about your space and we’ll follow up with a personalized quote.</p>
-        <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 9:00 AM–5:00 PM.</p>
+        <p class="cta-note">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a>, Monday–Friday, 8:00 AM–5:00 PM.</p>
       </div>
     </section>
     <section class="article"><div class="article-inner">
@@ -1663,7 +1663,7 @@ def check_business(node: dict, errors: list[str], where: str) -> None:
     if node.get("email") != EMAIL:
         errors.append(f"{where}: email mismatch")
     hours = node.get("openingHoursSpecification", [{}])[0]
-    if hours.get("opens") != "09:00" or hours.get("closes") != "17:00":
+    if hours.get("opens") != "08:00" or hours.get("closes") != "17:00":
         errors.append(f"{where}: hours mismatch")
     for key in ("logo", "image"):
         url = node.get(key, {}).get("url", "")
@@ -1709,7 +1709,7 @@ def validate(pages: list[tuple[dict, str]]) -> None:
                 errors.append(f"{page['path']}: empty alt")
         if TEL.replace("tel:", "") not in markup and PHONE not in parser.text:
             errors.append(f"{page['path']}: phone not visible")
-        if "9:00 AM" not in parser.text and "9 AM" not in parser.text:
+        if "8:00 AM" not in parser.text and "8 AM" not in parser.text:
             errors.append(f"{page['path']}: hours not visible")
         visible = parser.text
         for forbidden in ("Kane", "Katlyn", "Walnut", "1801"):
@@ -1888,7 +1888,7 @@ def main() -> None:
         quote_errors.append("FormSubmit action/_next wrong")
     if quote_home_fields() not in quote_form(False) or quote_contact_fields() not in quote_form(False):
         quote_errors.append("fields drifted from the site quote form")
-    if PHONE not in quote_html or "9:00 AM" not in quote_html:
+    if PHONE not in quote_html or "8:00 AM" not in quote_html:
         quote_errors.append("phone/hours not visible")
     if quote_errors:
         sys.exit("/quote/ validation failed: " + "; ".join(quote_errors))
