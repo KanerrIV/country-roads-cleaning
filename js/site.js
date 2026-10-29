@@ -241,11 +241,12 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
     });
   }
 
-  const homeCarousel = $("home-carousel");
+    const homeCarousel = $("home-carousel");
   if (homeCarousel) {
     const slides = [...homeCarousel.querySelectorAll(".photo-carousel-slide")];
     const dots = [...homeCarousel.querySelectorAll(".photo-dot")];
     const pauseButton = $("home-carousel-pause");
+    const visual = homeCarousel.closest(".hero-visual");
     let photoIndex = 0;
     let photoTimer = null;
     let photosPaused = reducedMotion.matches;
@@ -269,7 +270,7 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
         if (i === photoIndex) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
-      $("home-carousel-count").textContent = `${photoIndex + 1} / ${slides.length}`;
+      if (visual) visual.classList.toggle("is-first-slide", photoIndex === 0);
       if (manual) {
         const label = slides[photoIndex].getAttribute("aria-label") || `Photo ${photoIndex + 1}`;
         $("home-carousel-announcement").textContent = label;
