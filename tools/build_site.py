@@ -512,7 +512,8 @@ def head(page: dict) -> str:
 
 def header(current: str) -> str:
     links = []
-    for href, label in NAV:
+    # /apply/ stays noindex and out of the sitemap; link it from the top nav only.
+    for href, label in (*NAV, ("/apply/", "Work with us")):
         current_attr = ' aria-current="page"' if href == current else ""
         links.append(f'<a href="{href}"{current_attr}>{esc(label)}</a>')
     return f"""
