@@ -26,6 +26,7 @@ QUOTE_PATH = "/quote/"
 BUSINESS_ID = f"{BASE}/#business"
 WEBSITE_ID = f"{BASE}/#website"
 GSC = "MBFMHKZPEH1q2RIueenmKA9H5wVpUnKhdF_wFM3hnpw"
+GA_ID = "G-7HDYPFGERD"
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>'
 
 # Description A, with the sentence that names an owner removed.
@@ -467,6 +468,15 @@ def head(page: dict) -> str:
     canonical = BASE + page["path"]
     robots = '<meta name="robots" content="noindex">' if page.get("noindex") else ""
     return f"""<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+
+    gtag('config', '{GA_ID}');
+  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#214A3C">
