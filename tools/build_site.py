@@ -23,6 +23,7 @@ PHONE = "(304) 710-5430"
 TEL = "tel:+13047105430"
 EMAIL = "countryroadscleaningsolutions@gmail.com"
 QUOTE_PATH = "/quote/"
+APPLY_PATH = "/apply/"
 BUSINESS_ID = f"{BASE}/#business"
 WEBSITE_ID = f"{BASE}/#website"
 GSC = "MBFMHKZPEH1q2RIueenmKA9H5wVpUnKhdF_wFM3hnpw"
@@ -517,8 +518,11 @@ def header(current: str) -> str:
         <span class="brand-name">Country Roads <small>Cleaning Solutions</small></span>
       </a>
       <div class="header-actions">
-        <a class="header-phone" href="{TEL}"><span class="sr-only">Call </span>{PHONE}</a>
-        <a class="button small" href="{QUOTE_PATH}">Get a quote {ARROW}</a>
+        <a class="button small ghost" href="{APPLY_PATH}">Work with us</a>
+        <div class="header-contact">
+          <a class="header-phone" href="{TEL}"><span class="sr-only">Call </span>{PHONE}</a>
+          <a class="button small" href="{QUOTE_PATH}">Get a quote {ARROW}</a>
+        </div>
       </div>
       <nav class="primary-nav" aria-label="Primary">{''.join(links)}</nav>
     </div>
