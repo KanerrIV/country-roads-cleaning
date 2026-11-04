@@ -820,7 +820,7 @@ def document(page: dict, main: str, include_about_in_footer: bool, dialogs: str)
 {footer(include_about_in_footer)}
 {mobile_cta()}
 {dialogs}
-<script src="/js/site.js" defer></script>
+<script src="/js/site.js?v=20261104c" defer></script>
 </body>
 </html>
 """
@@ -1570,7 +1570,7 @@ def render_apply() -> str:
     <section class="article"><div class="article-inner">
       <div class="form-card apply-card">
         <p class="form-status apply-thanks" id="apply-thanks" hidden>Thanks for applying! We got your application and will reach out soon.</p>
-        <form class="apply-form" id="apply-form" method="POST" action="{FORM_ENDPOINT}">
+        <form class="apply-form" id="apply-form" method="POST" action="#" data-endpoint="{FORM_ENDPOINT}">
           {fields}
           <div class="honeypot" aria-hidden="true"><label for="a-website">Leave this field empty</label><input id="a-website" name="_honey" tabindex="-1" autocomplete="off"></div>
           <input type="hidden" name="_subject" value="New job application | Country Roads Cleaning Solutions">
@@ -1637,7 +1637,7 @@ def render_quote() -> str:
       <div class="article-inner">
         <div class="form-card quote-quiz-card" id="q-card">
           <div id="q-form-wrap">
-            <form class="quote-quiz" id="q-form" method="POST" action="{FORM_ENDPOINT}" novalidate>
+            <form class="quote-quiz" id="q-form" method="POST" action="#" data-endpoint="{FORM_ENDPOINT}" novalidate>
               <noscript>
                 <style>
                   #q-form .quiz-step {{ display: block !important; }}
@@ -2026,7 +2026,7 @@ def main() -> None:
         body = quote_html.split("</head>", 1)[1]
         if forbidden.lower() in body.lower():
             quote_errors.append(f"forbidden term {forbidden}")
-    if f'action="{FORM_ENDPOINT}"' not in quote_html or f'value="{BASE}/quote/?sent=1"' not in quote_html:
+    if f'data-endpoint="{FORM_ENDPOINT}"' not in quote_html or f'value="{BASE}/quote/?sent=1"' not in quote_html:
         quote_errors.append("Form endpoint action/_next wrong")
     if quote_home_fields() not in quote_form(False) or quote_contact_fields() not in quote_form(False):
         quote_errors.append("fields drifted from the site quote form")
