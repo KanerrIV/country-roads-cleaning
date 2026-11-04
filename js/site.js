@@ -1,4 +1,5 @@
 const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
+const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E6q6X6ypOfvI3xHoxCUdnaysuaGojaC-wDYHfxDPOYb_uvG3hTsrA/exec";
 
 (() => {
   "use strict";
@@ -205,7 +206,7 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
     $("quote-back").addEventListener("click", () => showQuoteStep(1));
     showQuoteStep(1, false);
     const configured = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(QUOTE_EMAIL);
-    if (configured) form.action = `https://formsubmit.co/${encodeURIComponent(QUOTE_EMAIL.trim())}`;
+    if (configured) form.action = FORM_ENDPOINT;
     if (/^https?:$/.test(location.protocol)) $("form-next").value = `${location.origin}${location.pathname}?quote=sent#quote`;
     else $("form-next").remove();
     $("form-submit").disabled = false;

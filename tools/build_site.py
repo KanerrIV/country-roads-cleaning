@@ -22,6 +22,7 @@ BASE = "https://countryroadscleaningsolutions.com"
 PHONE = "(304) 710-5430"
 TEL = "tel:+13047105430"
 EMAIL = "countryroadscleaningsolutions@gmail.com"
+FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E6q6X6ypOfvI3xHoxCUdnaysuaGojaC-wDYHfxDPOYb_uvG3hTsrA/exec"  # Google Apps Script web app (replaces FormSubmit)
 QUOTE_PATH = "/quote/"
 BUSINESS_ID = f"{BASE}/#business"
 WEBSITE_ID = f"{BASE}/#website"
@@ -600,7 +601,7 @@ def privacy_dialog() -> str:
     <button class="dialog-close" type="button" aria-label="Close privacy notice" data-close="privacy-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
     <h2 id="privacy-title">Your quote request and privacy</h2>
     <p>When you request a quote, you share your name, ZIP code, home details, cleaning preferences, contact details, and any note you choose to include. Country Roads Cleaning Solutions uses these details to respond to your inquiry and discuss cleaning services with you.</p>
-    <p>The quote form is delivered through FormSubmit, a third-party form service. It processes form information and spam verification according to its <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">privacy policy</a>. If campaign details are in the page address, they are included with your inquiry so we can see how you found us.</p>
+    <p>The quote form is delivered to Country Roads by email through a secure form endpoint we operate (Google Apps Script). If campaign details are in the page address, they are included with your inquiry so we can see how you found us.</p>
     <p>Please leave out sensitive information such as payment details, alarm codes, and door codes. Call or text <a href="{TEL}">{PHONE}</a> if we need to arrange a key or other access.</p>
   </dialog>"""
 
@@ -1569,7 +1570,7 @@ def render_apply() -> str:
     <section class="article"><div class="article-inner">
       <div class="form-card apply-card">
         <p class="form-status apply-thanks" id="apply-thanks" hidden>Thanks for applying! We got your application and will reach out soon.</p>
-        <form class="apply-form" id="apply-form" method="POST" action="https://formsubmit.co/{EMAIL}">
+        <form class="apply-form" id="apply-form" method="POST" action="{FORM_ENDPOINT}">
           {fields}
           <div class="honeypot" aria-hidden="true"><label for="a-website">Leave this field empty</label><input id="a-website" name="_honey" tabindex="-1" autocomplete="off"></div>
           <input type="hidden" name="_subject" value="New job application | Country Roads Cleaning Solutions">
@@ -1636,7 +1637,7 @@ def render_quote() -> str:
       <div class="article-inner">
         <div class="form-card quote-quiz-card" id="q-card">
           <div id="q-form-wrap">
-            <form class="quote-quiz" id="q-form" method="POST" action="https://formsubmit.co/{EMAIL}" novalidate>
+            <form class="quote-quiz" id="q-form" method="POST" action="{FORM_ENDPOINT}" novalidate>
               <noscript>
                 <style>
                   #q-form .quiz-step {{ display: block !important; }}
@@ -2025,8 +2026,8 @@ def main() -> None:
         body = quote_html.split("</head>", 1)[1]
         if forbidden.lower() in body.lower():
             quote_errors.append(f"forbidden term {forbidden}")
-    if f'action="https://formsubmit.co/{EMAIL}"' not in quote_html or f'value="{BASE}/quote/?sent=1"' not in quote_html:
-        quote_errors.append("FormSubmit action/_next wrong")
+    if f'action="{FORM_ENDPOINT}"' not in quote_html or f'value="{BASE}/quote/?sent=1"' not in quote_html:
+        quote_errors.append("Form endpoint action/_next wrong")
     if quote_home_fields() not in quote_form(False) or quote_contact_fields() not in quote_form(False):
         quote_errors.append("fields drifted from the site quote form")
     for line in quote_home_fields("q-").splitlines() + quote_contact_fields("q-").splitlines():
