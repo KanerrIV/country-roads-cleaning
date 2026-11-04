@@ -4,6 +4,20 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E
 (() => {
   "use strict";
   const $ = (id) => document.getElementById(id);
+
+  const postFormStayOnSite = (form, thanksUrl) => {
+    const endpoint = (form.getAttribute("action") || FORM_ENDPOINT || "").trim();
+    if (!endpoint) return Promise.reject(new Error("missing form endpoint"));
+    return fetch(endpoint, {
+      method: "POST",
+      body: new FormData(form),
+      mode: "no-cors",
+      credentials: "omit",
+      redirect: "follow"
+    }).then(() => {
+      location.assign(thanksUrl);
+    });
+  };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if ($("copyright-year")) $("copyright-year").textContent = String(new Date().getFullYear());
 
@@ -247,8 +261,17 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E
           input.value = params.get(key).slice(0, 500);
         }
       });
+      event.preventDefault();
       $("form-submit").disabled = true;
       $("form-submit").textContent = "Sending your request…";
+      const next = ($("form-next") && $("form-next").value)
+        || `${location.origin}${location.pathname}?quote=sent#quote`;
+      postFormStayOnSite(form, next).catch(() => {
+        $("form-submit").disabled = false;
+        $("form-submit").innerHTML = 'Request My Cleaning Quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
+        $("form-status").textContent = "Something went wrong sending your request. Please call or text (304) 710-5430.";
+        $("form-status").hidden = false;
+      });
     });
     $("full-name").addEventListener("input", () => $("full-name").setCustomValidity(""));
     window.addEventListener("pageshow", () => {
@@ -447,8 +470,17 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E
           input.value = params.get(key).slice(0, 500);
         }
       });
+      event.preventDefault();
       submitButton.disabled = true;
       submitButton.textContent = "Sending your request…";
+      const next = (quiz.querySelector('[name="_next"]') || {}).value
+        || `${location.origin}${location.pathname}?sent=1`;
+      postFormStayOnSite(quiz, next).catch(() => {
+        submitButton.disabled = false;
+        submitButton.innerHTML = submitLabel;
+        $("q-status").textContent = "Something went wrong sending your request. Please call or text (304) 710-5430.";
+        $("q-status").hidden = false;
+      });
     });
     window.addEventListener("pageshow", () => {
       submitButton.disabled = false;
@@ -472,4 +504,33 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E
       showQuizStep(0, false);
     }
   }
+
+  const applyForm = $("apply-form");
+  if (applyForm) {
+    applyForm.addEventListener("submit", (event) => {
+      const honey = $("a-website");
+      if (honey && honey.value) { event.preventDefault(); return; }
+      event.preventDefault();
+      const btn = applyForm.querySelector('[type="submit"]');
+      const label = btn ? btn.innerHTML : "";
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending your application…";
+      }
+      const next = (applyForm.querySelector('[name="_next"]') || {}).value
+        || `${location.origin}${location.pathname}?sent=1`;
+      postFormStayOnSite(applyForm, next).catch(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = label;
+        }
+        const thanks = $("apply-thanks");
+        if (thanks) {
+          thanks.hidden = false;
+          thanks.textContent = "Something went wrong sending your application. Please call or text (304) 710-5430.";
+        }
+      });
+    });
+  }
+
 })();
