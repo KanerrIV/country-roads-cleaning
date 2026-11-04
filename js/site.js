@@ -6,6 +6,32 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if ($("copyright-year")) $("copyright-year").textContent = String(new Date().getFullYear());
 
+
+  const trackWhop = (name, props) => {
+    try {
+      if (typeof whop !== "undefined" && typeof whop.track === "function") {
+        whop.track(name, props || {});
+      }
+    } catch (_) {}
+  };
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (href.startsWith("tel:")) {
+      trackWhop("contact", { event_id: `phone_${Date.now()}` });
+      return;
+    }
+    try {
+      const url = new URL(href, location.href);
+      if (url.pathname.replace(/\/+$/, "") === "/quote") {
+        trackWhop("get_quote_click", { event_id: `gqc_${Date.now()}` });
+      }
+    } catch (_) {}
+  });
+
+
   const carousel = $("review-carousel");
   if (carousel) {
     const slides = [...document.querySelectorAll(".review-slide")];
@@ -231,6 +257,7 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
     if (new URLSearchParams(location.search).get("quote") === "sent") {
       $("form-content").hidden = true;
       $("form-success").hidden = false;
+      trackWhop("lead", { event_id: `lead_quote_${location.pathname}_${location.search}` });
     }
     $("new-request").addEventListener("click", () => {
       $("form-content").hidden = false;
@@ -439,6 +466,7 @@ const QUOTE_EMAIL = "countryroadscleaningsolutions@gmail.com";
     if (new URLSearchParams(location.search).has("sent")) {
       $("q-form-wrap").hidden = true;
       $("q-thanks").hidden = false;
+      trackWhop("lead", { event_id: `lead_quiz_${location.pathname}_${location.search}` });
     } else {
       showQuizStep(0, false);
     }
