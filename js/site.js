@@ -6,7 +6,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjGnl43QyC4ZDs-E
   const $ = (id) => document.getElementById(id);
 
   const postFormStayOnSite = (form, thanksUrl) => {
-    const endpoint = (form.getAttribute("action") || FORM_ENDPOINT || "").trim();
+    const endpoint = (form.getAttribute("data-endpoint") || FORM_ENDPOINT || "").trim();
     if (!endpoint) return Promise.reject(new Error("missing form endpoint"));
     return fetch(endpoint, {
       method: "POST",
