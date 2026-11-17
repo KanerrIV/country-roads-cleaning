@@ -66,6 +66,7 @@ button:disabled { cursor: wait; opacity: 0.7; }
   margin-top: 5px; font-weight: 400;
 }
 .header-actions { display: flex; gap: 18px; align-items: center; margin-left: auto; }
+.header-contact { display: flex; gap: 18px; align-items: center; }
 .header-phone {
   color: var(--green); font-weight: 700; text-decoration: none; font-size: 18px; white-space: nowrap;
 }
@@ -432,8 +433,16 @@ dialog::backdrop { background: rgba(15, 26, 19, 0.86); }
   .brand img { width: 54px; height: 54px; }
   .brand-name { font-size: 14px; }
   .brand-name small { font-size: 8px; letter-spacing: 1.2px; }
-  .header-actions .button { min-height: 44px; font-size: 14px; padding: 8px 10px; }
-  .header-phone { font-size: 16px; }
+  .header-actions {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .header-contact { gap: 6px; flex: none; }
+  .header-actions .button { min-height: 44px; font-size: 14px; padding: 8px 8px; gap: 8px; flex: none; }
+  .header-actions .button svg { width: 16px; height: 16px; }
+  .header-phone { font-size: 16px; flex: none; }
   .primary-nav { padding-bottom: 8px; }
   .primary-nav a { font-size: 14px; }
   h1 { font-size: 36px; }
@@ -463,6 +472,16 @@ dialog::backdrop { background: rgba(15, 26, 19, 0.86); }
   .mobile-cta.visible { display: block; }
   .mobile-cta .button { width: 100%; min-height: 48px; font-size: 16px; }
   .hero-cta .button, .gallery-cta .button { width: 100%; }
+}
+
+@media (max-width: 340px) {
+  .header-phone { font-size: 14px; }
+  .header-actions .button { font-size: 13px; padding: 7px 8px; }
+  .header-contact { gap: 6px; }
+}
+
+@media (max-width: 336px) {
+  .header-actions .button svg { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
